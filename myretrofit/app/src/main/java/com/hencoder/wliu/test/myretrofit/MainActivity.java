@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
 //            }
 //        });
 //
-//        // ------- /api/users
+//        // ------- CREATE USER: /api/users
 //        User user = new User("morpheus", "leader");
 //        Call<User> call_1 = apiInterface.createUser(user);
 //        call_1.enqueue(new Callback<User>() {
@@ -94,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
 //            }
 //        });
 //
-//        // ------- /api/users?page=x
+//        // ------- USER LIST: /api/users?page=x
 //        Call<UserList> call_2 = apiInterface.doGetUserList(2);
 //        call_2.enqueue(new Callback<UserList>() {
 //            @Override
