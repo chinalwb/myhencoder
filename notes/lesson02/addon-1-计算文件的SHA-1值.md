@@ -27,7 +27,61 @@ In cryptography, SHA-1 (Secure Hash Algorithm 1) is a cryptographic hash functio
 刚才我查了一下 得到的信息跟这个有差异。 
 总体来说还是要对文件的所有内容进行消息摘要，得到一个固定长度的hash值。代码分享一下
 
+```
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.xml.bind.annotation.adapters.HexBinaryAdapter;
+
+/**
+ *
+ * @author wliu
+ */
+public class MessageDigestSample {
+    
+    public static void main(String[] args) {
+        InputStream fis = null;
+        try {
+            String path = "/Users/wliu/Music/My/leiting-zuiai.wav";
+            MessageDigest messageDigest = MessageDigest.getInstance("SHA-1");
+            fis = new FileInputStream(new File(path));
+            int n = 0;
+            byte[] buffer = new byte[8192];
+            while (n != -1) {
+                n = fis.read(buffer);
+                if (n > 0) {
+                    messageDigest.update(buffer, 0, n);
+                }
+            }
+            
+            String sha1 = new HexBinaryAdapter().marshal(messageDigest.digest());
+            System.out.println("File sha1 = " + sha1);
+            
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(MessageDigestSample.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (FileNotFoundException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } finally {
+            if (fis != null) {
+                try {
+                    fis.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+}
+```
 
 
 ---

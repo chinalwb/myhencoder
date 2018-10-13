@@ -9,4 +9,4 @@
 ## lesson02 - 编码、加密、Hash
 * [HenCoder notes](./notes/lesson02/hencoder-notes.md)
 * [补充笔记-1-如何计算文件的SHA-1值？](./notes/lesson02/addon-1-计算文件的SHA-1值.md)
-* [补充笔记-2-为什么override equals方法就必须要override hashCode方法](./notes/lesson02/addon-2-为什么override equals方法就必须要override hashCode方法.md)
+* [补充笔记-2-为什么override equals方法就必须要override hashCode方法](./notes/lesson02/addon-2-为什么override-equals方法就必须要override-hashCode方法.md)

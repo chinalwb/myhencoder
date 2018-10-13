@@ -55,6 +55,5 @@ public class MessageDigestSample {
                 }
             }
         }
-        // 3f786850e387550fdab836ed7e6dc881de23001b
     }
 }
