@@ -3,13 +3,13 @@
 任何请求（Request）都需要带有 Host 这个request header
 
 比如：
+```
 POST /recommend/baidu_zhannei_search?keyword=origin+host+http HTTP/1.1
 Host: zhannei-dm.csdn.net
 Connection: keep-alive
 Content-Length: 4657
 ...
-
-
+```
 
 Host header的作用是：
 - 首先Host他不是用来做网络寻址的，也就是说不是让服务器去根据这个域名去找IP。
@@ -47,6 +47,7 @@ Host: zhannei-dm.csdn.net
 
 查看HttpURLConnection源码
 有这样的注释：
+```
 * <p>For example, to retrieve the webpage at {@code http://www.android.com/}:
  * <pre>   {@code
  *   URL url = new URL("http://www.android.com/");
@@ -58,10 +59,11 @@ Host: zhannei-dm.csdn.net
  *     urlConnection.disconnect();
  *   }
  * }</pre>
-
+```
 也就是url.openConnection() 这个方法返回了一个HttpURLConnection对象
 
 那么接着看url.openConnection 方法
+```
     /**
      * Returns a new connection to the resource referred to by this URL.
      *
@@ -70,10 +72,12 @@ Host: zhannei-dm.csdn.net
     public URLConnection openConnection() throws IOException {
         return streamHandler.openConnection(this);
     }
+```
 
 可以看到他调用了 streamHandler的openConnection
 
 而当查看URLStreamHandler的源码时，发现
+```
     /**
      * Establishes a new connection to the resource specified by the URL {@code
      * u}. Since different protocols also have unique ways of connecting, it
@@ -86,18 +90,20 @@ Host: zhannei-dm.csdn.net
      *             if an I/O error occurs during opening the connection.
      */
     protected abstract URLConnection openConnection(URL u) throws IOException;
+```
 
 他是一个抽象方法
 
 再回去到URL.java里面看怎么初始化的URLStreamHandler
+```
        // If there is a stream handler factory, then attempt to
         // use it to create the handler.
         if (streamHandlerFactory != null) {
             streamHandler = streamHandlerFactory.createURLStreamHandler(protocol);
-
+```
 也就是说是streamHandlerFactory这个工厂类创建了这个streamHandler对象
 看他源码的时候发现他是一个interface
-
+```
 package java.net;
 /**
  * Defines a factory which creates an {@code URLStreamHandler} for a specified
@@ -114,14 +120,15 @@ public interface URLStreamHandlerFactory {
      */
     URLStreamHandler createURLStreamHandler(String protocol);
 }
-
+```
 --- 再往下这条路走不下去了 -- 不过我看到一句注释说，streamHandler是在URL被实例化的时候就确定好了的。后来找不到在哪看到的了--
 
 那继续从其他角度分析吧
 建立连接肯定离不开Socket
 在socket中看到有这样一个构造:
-public Socket(String dstName, int dstPort) 
+`public Socket(String dstName, int dstPort)`
 不同版本略有差异，javadoc里面是这么写的：
+```
 public Socket(String host,
       int port)
        throws UnknownHostException,
@@ -148,9 +155,10 @@ public Socket(String host,
     public Socket(String dstName, int dstPort) throws UnknownHostException, IOException {
         this(dstName, dstPort, null, 0);
     }
-
+```
 这就是说传进来一个host，就能建立连接了
 顺着这条线索看到：
+```
         InetAddress[] dstAddresses = InetAddress.getAllByName(dstName);
 那么在InetAddress类中一定完成了域名到IP的映射：
 再看这个InetAddress类：
@@ -158,13 +166,15 @@ public class InetAddress
 extends Object
 implements Serializable
 ** This class represents an Internet Protocol (IP) address.
-
+```
 果然！
 其中有一个静态方法：
+```
 static InetAddress	getByName(String host)
 Determines the IP address of a host, given the host's name.
-
+```
 而在InetAddress类中最终是通过
+```
 /*
 1421 * Simple factory to create the impl
 1422 */
@@ -188,7 +198,7 @@ Determines the IP address of a host, given the host's name.
 1434
 1435    static native boolean isIPv6Supported();
 1436}
-
+```
 
 可以看到是更底层JNI调用native代码来完成的。
 
