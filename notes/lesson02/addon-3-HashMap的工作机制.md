@@ -166,7 +166,7 @@ public V get(Object key) {
 5. Value 对象的 hashCode() 和 equals() 方法并没有用在 HashMap的 get() 和 put() 方法中
 6. null 对象的hashCode永远是0，并且null对象会被存储到Entry数组中下标为0的位置
 
-##### Java 8 中对HashMap的改进
+##### 7. Java 8 中对HashMap的改进
 简述：
 > 上述bucket的数据结构由链表改为了红黑树，用来提高hash碰撞频繁发生时的效率。
 因为链表的查找算法时间复杂度为 `O(n)`, 而红黑树的查找算法复杂度为 `O(log n)`
