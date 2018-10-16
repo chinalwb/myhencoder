@@ -1,5 +1,10 @@
 package com.hencoder.wliu.test.myretrofit.journaldev;
 
+import android.util.Log;
+
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.SSLSession;
+
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
@@ -14,6 +19,13 @@ public class APIClient {
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         OkHttpClient client = new OkHttpClient.Builder()
                 .addInterceptor(interceptor)
+                .hostnameVerifier(new HostnameVerifier() {
+                    @Override
+                    public boolean verify(String s, SSLSession sslSession) {
+                        Log.e("XX", "s == " + s);
+                        return true;
+                    }
+                })
                 .build();
 
         retrofit = new Retrofit.Builder()

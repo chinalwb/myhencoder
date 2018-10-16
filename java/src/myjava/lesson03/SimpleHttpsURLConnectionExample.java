@@ -18,8 +18,24 @@ public class SimpleHttpsURLConnectionExample {
   public static void main(String args[ ])throws Exception { 
     try { 
     
-        URL url = new URL("https://hencoder.com");
+        URL url = new URL("https://www.hencoder.com");
+//        SSLSocketFactory factory = HttpsURLConnection.getDefaultSSLSocketFactory();
+//        HttpsURLConnection.setDefaultSSLSocketFactory(factory);
+
+        HostnameVerifier hv = new HostnameVerifier() {
+            @Override
+            public boolean verify(String host, SSLSession ssls) {
+                //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                System.out.println("host == " + host);
+                return false;
+            }
+        };
+        System.out.println("hv == " + hv);
+        HttpsURLConnection.setDefaultHostnameVerifier(hv);
+        
         HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
+        HostnameVerifier chv = connection.getHostnameVerifier();
+        System.out.println("chv == " + chv);
         connection.connect();
         
         // read the output from the server
@@ -29,10 +45,12 @@ public class SimpleHttpsURLConnectionExample {
       String line = null;
       while ((line = reader.readLine()) != null)
       {
+          System.out.println("line = " + line);
         stringBuilder.append(line + "\n");
       }
         System.out.println(stringBuilder.toString());
-    } catch(IOException e) { 
+    } catch(IOException e) {
+        e.printStackTrace();
     } 
   } 
 } 
