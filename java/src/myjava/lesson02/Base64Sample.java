@@ -16,6 +16,10 @@ import java.util.Base64;
 
 /**
  *
+ * 图片转base64
+ * 
+ * base64转图片
+ * 
  * @author wliu
  */
 public class Base64Sample {
