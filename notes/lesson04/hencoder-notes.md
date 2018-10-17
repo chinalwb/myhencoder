@@ -89,6 +89,12 @@ person.gender("male")
 
 
 
+* [java.lang.reflect.Proxy.newProxyInstance() Method Example](https://www.tutorialspoint.com/javareflect/javareflect_proxy_newproxyinstance.htm)
+
+* [Dynamic Proxies in Java](https://www.baeldung.com/java-dynamic-proxies)
+
+
+
 
 
 
