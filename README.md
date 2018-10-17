@@ -15,3 +15,7 @@
 ## lesson03 - 登录、授权，TCP/IP， HTTPS
 * [HenCoder notes](./notes/lesson03/hencoder-notes.md)
 * [补充笔记-1-到底要不要setHostnameVerifier？](./notes/lesson03/addon-1-到底要不要setHostnameVerifier.md)
+* [补充笔记-2-数字证书的颁发和验证过程](./notes/lesson03/addon-2-数字证书的颁发_验证过程.md)
+
+## lesson04 - retrofit
+* [HenCoder notes](./notes/lesson04/hencoder-notes.md)
