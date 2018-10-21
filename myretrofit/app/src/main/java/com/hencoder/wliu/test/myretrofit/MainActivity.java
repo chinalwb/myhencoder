@@ -17,6 +17,9 @@ import com.hencoder.wliu.test.myretrofit.journaldev.UserList;
 import java.nio.channels.InterruptedByTimeoutException;
 import java.util.List;
 
+import okhttp3.Interceptor;
+import okhttp3.OkHttpClient;
+import okhttp3.internal.http.RealInterceptorChain;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -157,6 +160,8 @@ public class MainActivity extends AppCompatActivity {
 //                call.cancel();
 //            }
 //        });
+
+        RealInterceptorChain D;
 
         // ------- /api/users/{id}
         Call<SingleUser> call_4 = apiInterface.getUserById(12);
