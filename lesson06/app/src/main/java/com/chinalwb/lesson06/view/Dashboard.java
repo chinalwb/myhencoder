@@ -17,8 +17,8 @@ import com.chinalwb.lesson06.Utils;
 public class Dashboard extends View {
 
     // 仪表盘的半径
-    private static final float RADIUS = Utils.dp2px(150);
-    private static final float LENGTH = Utils.dp2px(100);
+    private static final float RADIUS = Utils.dp2px(80);
+    private static final float LENGTH = Utils.dp2px(60);
     // Paint
     private Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
     // 起始角度

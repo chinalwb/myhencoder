@@ -21,7 +21,7 @@ public class AvatarView extends View {
 
     private Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
     private int width, height, left, top, right, bottom, cx, cy, radius;
-    private int padding = (int) Utils.dp2px(50);
+    private int padding = (int) Utils.dp2px(150);
     public AvatarView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
     }
@@ -31,7 +31,7 @@ public class AvatarView extends View {
         super.onSizeChanged(w, h, oldw, oldh);
 
         this.left = padding;
-        this.top = padding;
+        this.top = padding / 2;
         this.width = w - padding * 2;
         this.cx = this.left + this.width / 2;
         this.cy = this.top + this.width / 2;

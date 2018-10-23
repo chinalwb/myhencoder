@@ -13,7 +13,7 @@ import com.chinalwb.lesson06.Utils;
 public class Pie extends View {
 
     private Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
-    private float radius = Utils.dp2px(150);
+    private float radius = Utils.dp2px(80);
     private int cx, cy, width, height, left, top, right, bottom;
     private static final int[] angles = {40, 50, 60, 100, 110};
     private static final int[] colors = {
