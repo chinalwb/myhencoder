@@ -8,22 +8,28 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <com.chinalwb.lesson06.view.Dashboard
-        android:layout_weight="1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"/>
+    <!--<com.chinalwb.lesson06.view.Dashboard-->
+        <!--android:layout_weight="1"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="Hello World!"/>-->
 
-    <com.chinalwb.lesson06.view.Pie
-        android:layout_weight="1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!" />
+    <!--<com.chinalwb.lesson06.view.Pie-->
+        <!--android:layout_weight="1"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="Hello World!" />-->
 
-    <com.chinalwb.lesson06.view.AvatarView
-        android:layout_weight="1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!" />
+    <!--<com.chinalwb.lesson06.view.AvatarView-->
+        <!--android:layout_weight="1"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="Hello World!" />-->
+
+    <com.chinalwb.lesson06.view.PathFillTypeView
+    android:layout_weight="3"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Hello World!" />
 
 </LinearLayout>
