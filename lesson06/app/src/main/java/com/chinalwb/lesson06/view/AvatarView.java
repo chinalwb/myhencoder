@@ -60,7 +60,7 @@ public class AvatarView extends View {
         canvas.drawBitmap(bitmap, left, top, paint);
         canvas.restoreToCount(saveCount);
 
-        // 圆形图片 1
+        // 圆形图片 -- 范围裁切方式实现
 //        canvas.save();
 //        Path path = new Path();
 //        path.addCircle(cx, cy, radius, Path.Direction.CCW);

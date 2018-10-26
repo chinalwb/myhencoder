@@ -1,7 +1,19 @@
 
 ### 自定义View - 绘制
 
+#### APIs and Packages
+* Path: android.graphics.Path
+	- Path.Direction.CCW / CW: 
+* Paint: android.graphics.Paint
+	- Paint.Style.FILL / STROKE
+* Canvas:
+	- android.graphics.Canvas
+* TypedValue: android.util.TypedValue
 
+
+
+
+---------
 
 
 坐标系 - X 左负右正， Y 上负下正

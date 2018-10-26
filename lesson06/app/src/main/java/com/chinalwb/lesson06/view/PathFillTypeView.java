@@ -24,6 +24,7 @@ public class PathFillTypeView extends View {
 
     {
         paint.setStyle(Paint.Style.FILL);
+        paint.setStrokeWidth(2);
     }
 
     @Override
@@ -35,16 +36,23 @@ public class PathFillTypeView extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        Path path = new Path();
-        path.setFillType(Path.FillType.EVEN_ODD);
-        path.addRect(padding, padding, padding + width, padding + height, Path.Direction.CCW);
+        int cx, cy;
+        cx = cy = (int) (padding + width / 2);
+        canvas.drawCircle(cx, cy, 5, paint);
 
-        float cx = padding + width / 2;
-        float cy = padding + height;
-        float radius = width / 2;
-        path.addCircle(cx, cy, radius, Path.Direction.CCW);
+        canvas.drawArc(padding, padding, padding + width, padding + width,
+                0, 90, false, paint);
 
-        canvas.drawPath(path, paint);
+//        Path path = new Path();
+//        path.setFillType(Path.FillType.EVEN_ODD);
+//        path.addRect(padding, padding, padding + width, padding + height, Path.Direction.CCW);
+//
+//        float cx = padding + width / 2;
+//        float cy = padding + height;
+//        float radius = width / 2;
+//        path.addCircle(cx, cy, radius, Path.Direction.CCW);
+//
+//        canvas.drawPath(path, paint);
 
 
     }
