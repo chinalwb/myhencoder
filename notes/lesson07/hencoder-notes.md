@@ -21,7 +21,7 @@
 * canvas.clipPath() // 设定剪切范围，会有毛边
 * canvas.clipRect()
 * translate
-* rotate
+* rotate (默认以坐标原点为中心，如果需要以View的中心旋转，则需要先移动再旋转)
 * scale
 * skew
 * 抗锯齿会多增加几个像素在绘制范围内

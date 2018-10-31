@@ -6,10 +6,27 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <com.chinalwb.lesson07.view.SportsView
+    <!--<com.chinalwb.lesson07.view.SportsView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:text="Hello World!"-->
+        <!--/>-->
+
+    <!--<com.chinalwb.lesson07.view.ImageTextView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--/>-->
+
+    <!--<com.chinalwb.lesson07.view.CameraView-->
+        <!--android:id="@+id/camera_view"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--/>-->
+
+    <com.chinalwb.lesson07.view.CameraRotateView
+        android:id="@+id/camera_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Hello World!"
         />
 
 </LinearLayout>

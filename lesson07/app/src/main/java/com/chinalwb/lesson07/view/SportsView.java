@@ -27,11 +27,6 @@ public class SportsView extends View {
         super(context, attrs);
     }
 
-    {
-        paint.setStyle(Paint.Style.STROKE);
-        paint.setColor(Color.GRAY);
-        paint.setStrokeWidth(stroke_width);
-    }
 
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
@@ -49,6 +44,10 @@ public class SportsView extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
+        paint.setStyle(Paint.Style.STROKE);
+        paint.setColor(Color.GRAY);
+        paint.setStrokeWidth(stroke_width);
+
         canvas.drawCircle(cx, cy, radius, paint);
 
         paint.setColor(Color.MAGENTA);
@@ -59,9 +58,6 @@ public class SportsView extends View {
         paint.setStyle(Paint.Style.FILL);
         paint.setTextAlign(Paint.Align.CENTER);
         paint.setTextSize(textSize);
-
-//        paint.getTextBounds("abab", 0, 3, bounds);
-//        cy += bounds.height() / 2;
 
         Paint.FontMetrics fontMetrics = paint.getFontMetrics();
         float offset = (fontMetrics.ascent + fontMetrics.descent) / 2;
