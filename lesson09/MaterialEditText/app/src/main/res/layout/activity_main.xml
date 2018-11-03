@@ -4,19 +4,30 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".MainActivity">
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
         >
-
         <com.chinalwb.materialedittext.MaterialEditText
+            android:id="@+id/material_edit_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:useFloatingLabel="false"
             android:hint="Username"
             />
     </LinearLayout>
 
+    <Button
+        android:id="@+id/toggle_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Toggle Floating Label"/>
 </LinearLayout>
