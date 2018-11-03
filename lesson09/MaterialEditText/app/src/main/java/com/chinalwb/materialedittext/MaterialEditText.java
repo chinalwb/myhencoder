@@ -106,10 +106,9 @@ public class MaterialEditText extends AppCompatEditText {
         this.width = w;
         this.height = h;
 
+
         underlineRect.left = this.originalPaddingLeft;
         underlineRect.right = this.width - this.originalPaddingRight;
-        underlineRect.top = this.height - C_HEIGHT - originalPaddingBottom + CURSOR_UNDERLINE_GAP;
-        underlineRect.bottom = this.height - C_HEIGHT - originalPaddingBottom + CURSOR_UNDERLINE_GAP + UNDERLINE_HEIGHT;
     }
 
     private void updateFloatingText(CharSequence s) {
@@ -213,6 +212,8 @@ public class MaterialEditText extends AppCompatEditText {
         if (useTextCounting) {
             setBackgroundDrawable(null);
             paint.setColor(Color.BLUE);
+            underlineRect.top = getScrollY() + this.height - C_HEIGHT - originalPaddingBottom + CURSOR_UNDERLINE_GAP;
+            underlineRect.bottom = underlineRect.top + UNDERLINE_HEIGHT;
             canvas.drawRect(underlineRect, paint);
 
             paint.setTextSize(COUNTING_TEXT_SIZE);
