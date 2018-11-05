@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    tools:context=".MainActivity">
+
+    <com.chinalwb.taglayout.TagLayout
+        android:id="@+id/tag_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:background="@android:color/background_dark">
+
+        <!--<com.chinalwb.taglayout.ColorTextView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="Hello X1"-->
+        <!--/>-->
+
+    </com.chinalwb.taglayout.TagLayout>
+
+
+    <!--<com.chinalwb.taglayout.TagLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="130dp"-->
+        <!--android:background="@android:color/background_dark">-->
+
+        <!--<com.chinalwb.taglayout.ColorTextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="Hello X1"-->
+            <!--/>-->
+
+        <!--<com.chinalwb.taglayout.ColorTextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="Hello X2222"-->
+            <!--android:textColor="@android:color/white"-->
+            <!--/>-->
+
+        <!--<com.chinalwb.taglayout.ColorTextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="Hello X1"-->
+            <!--/>-->
+
+        <!--<com.chinalwb.taglayout.ColorTextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="Hello X2 22222"-->
+            <!--android:textColor="@android:color/white"-->
+            <!--/>-->
+
+        <!--<com.chinalwb.taglayout.ColorTextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="Hello X2 22222"-->
+            <!--android:textColor="@android:color/white"-->
+            <!--/>-->
+
+        <!--<com.chinalwb.taglayout.ColorTextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="Hello X2 22222"-->
+            <!--android:textColor="@android:color/white"-->
+            <!--/>-->
+
+
+        <!--<com.chinalwb.taglayout.ColorTextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="Hello X2 22222"-->
+            <!--android:textColor="@android:color/white"-->
+            <!--/>-->
+
+        <!--<com.chinalwb.taglayout.ColorTextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="Hello X3"-->
+            <!--/>-->
+
+
+        <!--<Button-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="Hello 1"/>-->
+
+        <!--<Button-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="Hello 2"/>-->
+
+        <!--<Button-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="Hello 3"/>-->
+
+        <!--<Button-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="Hello 4"/>-->
+
+        <!--<Button-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="Hello 4 - 000000000000000000000000000000000 1"/>-->
+
+        <!--<Button-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="Hello 5"/>-->
+    <!--</com.chinalwb.taglayout.TagLayout>-->
+
+
+
+</LinearLayout>
