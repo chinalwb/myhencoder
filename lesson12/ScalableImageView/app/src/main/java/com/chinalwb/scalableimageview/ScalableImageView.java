@@ -20,13 +20,16 @@ import android.widget.Scroller;
 
 import java.lang.annotation.Target;
 
+import static android.view.MotionEvent.ACTION_DOWN;
+import static android.view.MotionEvent.ACTION_MOVE;
+
 public class ScalableImageView extends View implements GestureDetector.OnGestureListener, GestureDetector.OnDoubleTapListener, Runnable {
     private Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
 
     private Bitmap bitmap;
     private float width, height, bmw, bmh;
     private float bmx, bmy;
-    private float smallScale, bigScale, extraScale = 10f;
+    private float smallScale, bigScale, extraScale = 2f;
     private boolean isBig = false;
 
     private GestureDetectorCompat gestureDetector;
@@ -34,6 +37,8 @@ public class ScalableImageView extends View implements GestureDetector.OnGesture
     private OverScroller overScroller;
     private float fraction;
     private float offsetX, offsetY, currentTotalOffsetX, currentTotalOffsetY;
+
+    private float ox, oy;
 
     public ScalableImageView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
@@ -82,17 +87,34 @@ public class ScalableImageView extends View implements GestureDetector.OnGesture
         super.onDraw(canvas);
 
 //        canvas.save();
-        canvas.translate(offsetX, offsetY);
-        Log.e("XX", "offsetY == " + offsetY);
-        float scale = smallScale + (bigScale - smallScale) * fraction;
-        canvas.scale(scale, scale, this.width / 2, this.height / 2);
-        canvas.drawBitmap(bitmap, this.bmx, this.bmy, paint);
+//        canvas.translate(offsetX, offsetY);
+//        Log.e("XX", "offsetY == " + offsetY);
+//        float scale = smallScale + (bigScale - smallScale) * fraction;
+//        canvas.scale(scale, scale, this.width / 2, this.height / 2);
+//        canvas.drawBitmap(bitmap, this.bmx, this.bmy, paint);
 //        canvas.restore();
+
+
+        canvas.drawBitmap(bitmap, offsetX, offsetY, paint);
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        return gestureDetector.onTouchEvent(event);
+        int action = event.getActionMasked();
+        switch (action) {
+            case ACTION_DOWN:
+
+
+                invalidate();
+                break;
+            case ACTION_MOVE:
+                offsetX = event.getX();
+                offsetY = event.getY();
+                invalidate();
+                break;
+        }
+        return true;
+        // return gestureDetector.onTouchEvent(event);
     }
 
     @Override
