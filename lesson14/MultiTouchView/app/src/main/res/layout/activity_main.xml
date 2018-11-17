@@ -11,9 +11,27 @@
         <!--android:layout_height="wrap_content"-->
         <!--/>    -->
 
-    <com.chinalwb.multitouchview.view.MultiTouchView3
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        />
+    <!--<com.chinalwb.multitouchview.view.MultiTouchView3-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--/>-->
+
+    <com.chinalwb.multitouchview.view.TwoPagerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.chinalwb.multitouchview.view.MyView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorAccent"
+            />
+
+        <com.chinalwb.multitouchview.view.MyView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorPrimary" />
+
+
+    </com.chinalwb.multitouchview.view.TwoPagerView>
 
 </LinearLayout>
