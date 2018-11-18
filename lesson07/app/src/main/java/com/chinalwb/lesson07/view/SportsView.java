@@ -61,6 +61,8 @@ public class SportsView extends View {
 
         Paint.FontMetrics fontMetrics = paint.getFontMetrics();
         float offset = (fontMetrics.ascent + fontMetrics.descent) / 2;
-        canvas.drawText("aGg", cx, cy - offset, paint);
+        canvas.drawText("AAAAAAAaGg", cx, cy - offset, paint);
+
+        canvas.drawCircle(cx, cy,10, paint);
     }
 }
