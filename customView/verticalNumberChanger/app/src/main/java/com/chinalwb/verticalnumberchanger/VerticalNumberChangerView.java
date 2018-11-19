@@ -4,7 +4,6 @@ package com.chinalwb.verticalnumberchanger;
 import android.animation.ObjectAnimator;
 import android.annotation.TargetApi;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -19,7 +18,7 @@ import android.view.View;
 import android.widget.OverScroller;
 
 @TargetApi(16)
-public class VerticalNumberChangerView extends View implements Runnable {
+public class VerticalNumberChangerView extends View implements GestureDetector.OnGestureListener, Runnable {
 
     private final float GAP = Utils.dp2px(10);
 
@@ -29,14 +28,16 @@ public class VerticalNumberChangerView extends View implements Runnable {
     private Rect bounds = new Rect();
     private String format = "%02d";
     private float offsetY = 0;
-    private float downX, downY, originalOffsetY;
-    private float MAX_HEIGHT;
-    private int maxNumber = 60;
+    private float downY, originalOffsetY;
+    private int maxNumber = 100;
     private float UNIT_HEIGHT = 0;
-    private GestureDetectorCompat gestureDetectorCompat;
-    private GestureDetector.SimpleOnGestureListener onGestureListener;
+    private float textWidth, textHeight, TEXT_OFFSET;
+    private int baseIndex = -1;
     private ObjectAnimator objectAnimator;
+    private GestureDetectorCompat gestureDetectorCompat;
     private OverScroller overScroller;
+    private int selectedNumber = 0;
+    private NumberChangeListener numberChangeListener;
 
     public VerticalNumberChangerView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
@@ -48,56 +49,17 @@ public class VerticalNumberChangerView extends View implements Runnable {
         paint.setTextAlign(Paint.Align.CENTER);
         paint.setAlpha(150);
 
+        Paint.FontMetrics fontMetrics = paint.getFontMetrics();
+        TEXT_OFFSET = (fontMetrics.ascent + fontMetrics.descent) / 2;
+
+        paint.getTextBounds("99", 0, 2, bounds);
+        textWidth = bounds.width();
+        textHeight = bounds.height();
+        UNIT_HEIGHT = textHeight + GAP * 2;
+
+        gestureDetectorCompat = new GestureDetectorCompat(getContext(), this);
+
         overScroller = new OverScroller(getContext());
-        onGestureListener = new GestureDetector.SimpleOnGestureListener() {
-            @Override
-            public boolean onDown(MotionEvent e) {
-                downX = e.getX();
-                downY = e.getY();
-                originalOffsetY = offsetY;
-                return true;
-            }
-
-            @Override
-            public boolean onScroll(MotionEvent down, MotionEvent move, float distanceX, float distanceY) {
-                offsetY -= distanceY;
-                fixOffsetY(offsetY);
-//                Log.e("XX", "onscroll offset y == " + offsetY);
-                invalidate();
-                return true;
-            }
-
-            @Override
-            public boolean onFling(MotionEvent down, MotionEvent move, float velocityX, float velocityY) {
-                overScroller.fling(
-                        0,
-                        (int) offsetY,
-                        (int) velocityX,
-                        (int) velocityY,
-                        0, //(int) -(MAX_HEIGHT - getMeasuredHeight()),
-                        0,
-                        Integer.MIN_VALUE, //(int) -(MAX_HEIGHT - getMeasuredHeight()) * 2,
-                        Integer.MAX_VALUE//(int) (MAX_HEIGHT - getMeasuredHeight()) * 2
-                );
-
-                postOnAnimation(VerticalNumberChangerView.this);
-                return false;
-            }
-        };
-        gestureDetectorCompat = new GestureDetectorCompat(getContext(), onGestureListener);
-    }
-
-    @Override
-    public void run() {
-        if (overScroller.computeScrollOffset()) {
-            int currY = overScroller.getCurrY();
-            fixOffsetY(currY);
-//            Log.e("XX", "fling offsetY == " + offsetY);
-            invalidate();
-            postOnAnimation(this);
-        } else {
-            fixOffsetPos(offsetY);
-        }
     }
 
     @Override
@@ -111,13 +73,39 @@ public class VerticalNumberChangerView extends View implements Runnable {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        paint.getTextBounds("99", 0, 2, bounds);
-        int textWidth = bounds.width();
-        int textHeight = bounds.height();
 
         float measuredWidth = textWidth + GAP * 2;
         float measuredHeight = textHeight * 3 + GAP * 6;
         setMeasuredDimension((int) measuredWidth, (int) measuredHeight);
+    }
+
+    @Override
+    protected void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
+
+        float validOffsetY = offsetY % UNIT_HEIGHT;
+        float validOffsetYFix = offsetY > 0 && validOffsetY != 0f ? -UNIT_HEIGHT : 0;
+//         Log.e("XX", "offsetY == " + offsetY + ", valid offset Y == " + validOffsetY + ", UH == " + UNIT_HEIGHT);
+        float baseY = cy - TEXT_OFFSET - textHeight - GAP * 2 + validOffsetY + validOffsetYFix;
+
+        // 文字的绘制
+        //
+        int offsetIndex = (int) (-offsetY / UNIT_HEIGHT);
+        int offsetIndexFix = offsetY > 0 && validOffsetY != 0f ? -1 : 0;
+        int firstIndex = baseIndex + offsetIndex + offsetIndexFix;
+        int drawCount = validOffsetY == 0 ? 3 : 4;
+
+//        Log.e("XX", "first index == " + firstIndex + ", offsetIndex = " + offsetIndex + ", drawCount == " + drawCount);
+
+
+        for (int i = 0; i < drawCount; i++) {
+            int number = (maxNumber + firstIndex) % maxNumber;
+            String numberStr = String.format(format, number);
+            canvas.drawText(numberStr, cx, baseY, paint);
+
+            firstIndex++;
+            baseY += UNIT_HEIGHT;
+        }
     }
 
     @Override
@@ -133,125 +121,57 @@ public class VerticalNumberChangerView extends View implements Runnable {
 
     private void fixOffsetPos(float offset) {
         float modResult = offset % UNIT_HEIGHT;
-        if (Math.abs(modResult) > 0 && Math.abs(modResult) < UNIT_HEIGHT / 2f) {
-            offsetY = offset - modResult;
-        } else if (Math.abs(modResult) >= UNIT_HEIGHT / 2f) {
-            offsetY = offset - (UNIT_HEIGHT - Math.abs(modResult));
+        if (modResult == 0) {
+            return;
         }
-//        Log.e("XX", "offset == " + offset + ", modResult == " + modResult + ", UNIT_HEIGHT / 2F == " + (UNIT_HEIGHT / 2f) + ", offsetY == " + offsetY);
-
-        fixOffsetY(offsetY);
+        if (offset > 0) {
+            if (modResult < UNIT_HEIGHT / 2f) {
+                offsetY = offset - modResult;
+            } else {
+                offsetY = offset + (UNIT_HEIGHT - modResult);
+            }
+        } else if (offset < 0) {
+            if (modResult > -UNIT_HEIGHT / 2f) {
+                offsetY = offset - modResult;
+            } else {
+                offsetY = offset - (UNIT_HEIGHT + modResult);
+            }
+        }
+        getCurrentNumberAndFireListener();
+//        Log.e("XX", "offset == " + offset + ", offsetY == " + offsetY);
         getObjectAnimator(offset, offsetY).start();
     }
 
-    private void fixOffsetY(float offset) {
-//        Log.e("XX", "offset == " + offset);
-        float viewHeight = MAX_HEIGHT - getMeasuredHeight();
-        if (offset < 0) {
-            if (offset > -viewHeight) {
-                offsetY = offset;
-            } else {
-                offset = offset % viewHeight;
-                offsetY = offset;
+    private int getCurrentNumberAndFireListener() {
+        int currentNumber = getCurrentNumber();
+        Log.e("XX", "Current Number == " + currentNumber);
+
+        if (currentNumber != this.selectedNumber) {
+            if (this.numberChangeListener != null) {
+                this.numberChangeListener.onNumberChanged(currentNumber);
             }
-        } else if (offset > 0) {
-            if (offset < viewHeight) {
-                offset += -viewHeight;
-                offsetY = offset;
-            } else {
-                offset = offset % viewHeight;
-                offset += -viewHeight;
-                offsetY = offset;
-            }
+            this.selectedNumber = currentNumber;
         }
-
-//        Log.e("XX", "--> final offset Y == " + offsetY);
-
-        getCurrentNumber();
+        return currentNumber;
     }
 
-    private void getCurrentNumber() {
-        int currentNumber = (int) Math.abs(offsetY / UNIT_HEIGHT);
-        if (currentNumber == maxNumber) {
-            currentNumber = 0;
-        }
-        Log.e("XX", "Current Number == " + currentNumber); // + ", offset y == " + offsetY + ", unit height == " + UNIT_HEIGHT);
+    public int getCurrentNumber() {
+        float validOffsetY = offsetY % UNIT_HEIGHT;
+        int offsetIndex = (int) (-offsetY / UNIT_HEIGHT);
+        int offsetIndexFix = offsetY > 0 && validOffsetY != 0f ? -1 : 0;
+        int firstIndex = baseIndex + offsetIndex + offsetIndexFix;
+        int selectIndex = firstIndex + 1;
+        int currentNumber = (maxNumber + selectIndex) % maxNumber;
+        return currentNumber;
     }
 
-    @Override
-    protected void onDraw(Canvas canvas) {
-        super.onDraw(canvas);
-
-        paint.getTextBounds("99", 0, 2, bounds);
-        int textWidth = bounds.width();
-        int textHeight = bounds.height();
-
-        canvas.translate(0, offsetY);
-        // 文字的绘制
-        //
-        Paint.FontMetrics fontMetrics = paint.getFontMetrics();
-        float offset = (fontMetrics.ascent + fontMetrics.descent) / 2;
-        canvas.drawText(String.format(format, maxNumber - 1), cx, cy - offset - textHeight - GAP * 2, paint);
-
-        float baseY = cy - offset;
-        paint.setColor(Color.WHITE);
-        paint.setAlpha(150);
-
-
-        // 00 ~ maxNumber - 2, + maxNumber - 1, 00, 01
-        for (int i = 0; i < maxNumber + 2; i++) {
-            String numberStr = String.format(format, i);
-            if (i > maxNumber - 1) {
-                numberStr = String.format(format, i - maxNumber);
-            }
-            canvas.drawText(numberStr, cx, baseY + i * GAP * 2 + textHeight * i, paint);
-        }
-        int totalNumbers = maxNumber + 3;
-        if (MAX_HEIGHT == 0) {
-            MAX_HEIGHT = totalNumbers * textHeight + totalNumbers * 2 * GAP;
-            UNIT_HEIGHT = textHeight + GAP * 2;
+    private ObjectAnimator getObjectAnimator(float start, float end) {
+        if (null == this.objectAnimator) {
+            this.objectAnimator = ObjectAnimator.ofFloat(this, "offsetY", 0, 0);
         }
 
-//        paint.getTextBounds("99", 0, 2, bounds);
-//        int textWidth = bounds.width();
-//        int textHeight = bounds.height();
-//
-//
-//
-//        paint.setStyle(Paint.Style.STROKE);
-//        paint.setStrokeWidth(Utils.dp2px(1));
-//        paint.setColor(Color.MAGENTA);
-//        float left = (this.width - textWidth) / 2;
-//        float top = (this.height - textHeight) / 2;
-//        float right = left + textWidth;
-//        float bottom = top + textHeight;
-//        canvas.drawRect(left, top, right, bottom, paint);
-//
-//        paint.setStyle(Paint.Style.STROKE);
-//        float fmTop = cy + fontMetrics.top;
-//        canvas.drawLine(0, fmTop, this.width, fmTop, paint);
-//
-//        float fmAscent = cy + fontMetrics.ascent;
-//        canvas.drawLine(0, fmAscent, this.width, fmAscent, paint);
-//
-//        float fmBase = cy;
-//        canvas.drawLine(0, fmBase, this.width, fmBase, paint);
-//
-//        float fmDescent = cy + fontMetrics.descent;
-//        canvas.drawLine(0, fmDescent, this.width, fmDescent, paint);
-//
-//        float fmBottom = cy + fontMetrics.bottom;
-//        canvas.drawLine(0, fmBottom, this.width, fmBottom, paint);
-    }
-
-    private ObjectAnimator getObjectAnimator(float startValue, float endValue) {
-        if (objectAnimator == null) {
-            objectAnimator = ObjectAnimator.ofFloat(this, "offsetY", startValue, endValue);
-        }
-
-        objectAnimator.setFloatValues(startValue, endValue);
-
-        return objectAnimator;
+        this.objectAnimator.setFloatValues(start, end);
+        return this.objectAnimator;
     }
 
     public float getOffsetY() {
@@ -261,5 +181,75 @@ public class VerticalNumberChangerView extends View implements Runnable {
     public void setOffsetY(float offsetY) {
         this.offsetY = offsetY;
         invalidate();
+    }
+
+    @Override
+    public boolean onDown(MotionEvent e) {
+        return true;
+    }
+
+    @Override
+    public void onShowPress(MotionEvent e) {
+
+    }
+
+    @Override
+    public boolean onSingleTapUp(MotionEvent e) {
+        return false;
+    }
+
+    @Override
+    public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+        offsetY -= distanceY;
+        getCurrentNumberAndFireListener();
+        invalidate();
+        return false;
+    }
+
+    @Override
+    public void onLongPress(MotionEvent e) {
+
+    }
+
+    @Override
+    public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+        overScroller.fling(0,
+                (int) offsetY,
+                (int) velocityX,
+                (int) velocityY,
+                0,
+                0,
+                Integer.MIN_VALUE,
+                Integer.MAX_VALUE);
+
+        postOnAnimation(this);
+        return false;
+    }
+
+    @Override
+    public void run() {
+        if (overScroller.computeScrollOffset()) {
+            offsetY = overScroller.getCurrY();
+            getCurrentNumberAndFireListener();
+            invalidate();
+            postOnAnimation(this);
+        } else {
+            fixOffsetPos(offsetY);
+        }
+    }
+
+    public NumberChangeListener getNumberChangeListener() {
+        return numberChangeListener;
+    }
+
+    public void setNumberChangeListener(NumberChangeListener numberChangeListener) {
+        this.numberChangeListener = numberChangeListener;
+    }
+
+    /**
+     * Number change listener
+     */
+    public interface NumberChangeListener {
+        void onNumberChanged(int newNumber);
     }
 }
