@@ -43,6 +43,7 @@ git cherryp-pick commit#1 commit#2
 	4. Merge 到master
 
 * Git Flow - Git 工作流
+![Git Flow](./GitFlow.png)
 
 	
 ----

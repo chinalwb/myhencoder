@@ -41,3 +41,6 @@
 * MVC & MVP 更倾向于架构的规范
 * MVVM 更倾向于框架
 * MVP 就是 更多人心目中的MVC (Oh yea~~)
+
+
+![MVC-MVP-MVVM](./mvc_mvp_mvvm.png)
