@@ -16,6 +16,12 @@ public class Java {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        int x = -96;
+        System.out.println("x binary == " + Integer.toBinaryString(x));
+        System.out.println("x binary == " + Integer.toBinaryString(x >>> 1));
+        x = x >>> 1;
+        System.out.println("x binary == " + Integer.toBinaryString(x));
+        System.out.println("x == " + x);
     }
     
 }
