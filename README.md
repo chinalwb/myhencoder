@@ -16,6 +16,7 @@
 * [HenCoder notes](./notes/lesson03/hencoder-notes.md)
 * [补充笔记-1-到底要不要setHostnameVerifier？](./notes/lesson03/addon-1-到底要不要setHostnameVerifier.md)
 * [补充笔记-2-数字证书的颁发和验证过程](./notes/lesson03/addon-2-数字证书的颁发_验证过程.md)
+* [补充笔记-3-非对称加密/消息摘要/数字签名/证书验证](https://github.com/chinalwb/EasyCoding/blob/master/notes/ch01.md#4-https)
 
 ## lesson04 - retrofit
 * [HenCoder notes](./notes/lesson04/hencoder-notes.md)
