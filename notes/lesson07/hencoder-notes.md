@@ -10,12 +10,17 @@
 
 垂直居中计算方式：
 1. paint.getTextBounds // 获取文字绘制的矩形范围
-2. paint.getFontMetrics() // 
+2. paint.getFontMetrics() // FontMetrics ascent / descent
 
 
 多行文字
 * StaticLayout
-* paint.breakText
+
+* paint.breakText // canvas.drawText("….") 折行
+
+  ```java
+  paint.breakText(text, textStart, textEnd, x, y, float[] width)
+  ```
 
 
 * canvas.clipPath() // 设定剪切范围，会有毛边
@@ -34,4 +39,5 @@ Camera
 * camera.applyToCanvas
 
 Skia
+
 * 1 英寸 = 72像素
