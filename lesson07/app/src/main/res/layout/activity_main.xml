@@ -30,7 +30,7 @@
         <!--/>-->
 
 
-    <com.chinalwb.lesson07.view2.CircleImageView
+    <com.chinalwb.lesson07.view2.CameraView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         />
