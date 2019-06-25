@@ -22,8 +22,8 @@ alpha
 
 ##### ObjectAnimator
 
-
 `CircleView.java`
+
 - setRadius(float r) -- 设定新值 -- `invalidate()`
 - getRadius() -- 初始值
 
@@ -41,15 +41,16 @@ animator.start();
 ```
 AnimatorSet animatorSet = new AnimatorSet();
 animatorSet.playSequentially(animator1, animator2);
+animatorSet.start()
 ```
 
-#### PropertyValuesHolder
+#### PropertyValuesHolder - 多个属性同时改变做动画
 
 ```
 PropertyValuesHolder holder1 = PropertyValuesHolder.ofFloat
 ```
 
-`KeyFrame`
+### KeyFrame - 一个动画的多个关键帧
 
 ```
 PropertyValuesHolder.ofKeyFrame("translationX", keyFrame1, keyFrame2, kf3, kf4)
@@ -58,7 +59,7 @@ PropertyValuesHolder.ofKeyFrame("translationX", keyFrame1, keyFrame2, kf3, kf4)
 ##### ValueAnimator
 
 
-#### Interpolator
+#### Interpolator - 插值器
 ```
 view.animate()
 	.translationY(300)
@@ -66,7 +67,7 @@ view.animate()
 	.start();
 ```
 
-#### TypeEvaluator
+#### TypeEvaluator - 估值器
 
 ObjectAnimator.ofObject
 
@@ -76,6 +77,14 @@ class PointEvaluator implements TypeEvaluator<Point> {
 		// (endValue - startValue) * fraction + startValue
 	}
 }
+
+
+
+#### Listeners
+
+开始 / 结束
+
+???
 
 
 
