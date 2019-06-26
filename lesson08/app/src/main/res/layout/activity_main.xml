@@ -20,17 +20,22 @@
     <!--android:layout_height="match_parent"/>-->
 
     <!--<com.chinalwb.myapplication.CameraView-->
-            <!--android:id="@+id/camera_view"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent">-->
+    <!--android:id="@+id/camera_view"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent">-->
 
     <!--</com.chinalwb.myapplication.CameraView>-->
 
-    <com.chinalwb.myapplication.CameraViewRight
-            android:id="@+id/camera_view_right"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+    <!--<com.chinalwb.myapplication.CameraViewRight-->
+    <!--android:id="@+id/camera_view_right"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent">-->
 
-    </com.chinalwb.myapplication.CameraViewRight>
+    <!--</com.chinalwb.myapplication.CameraViewRight>-->
+
+    <com.chinalwb.myapplication.PointView
+            android:id="@+id/point"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
 
 </RelativeLayout>

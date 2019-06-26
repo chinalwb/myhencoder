@@ -44,16 +44,34 @@ animatorSet.playSequentially(animator1, animator2);
 animatorSet.start()
 ```
 
-#### PropertyValuesHolder - 多个属性同时改变做动画
+#### PropertyValuesHolder - 两种用法:
+
+#### 1. 多个属性同时改变做动画: `PropertyValuesHolder.ofFloat(..) ... ObjectAnimator.ofPropertyValuesHolder(..)`
 
 ```
-PropertyValuesHolder holder1 = PropertyValuesHolder.ofFloat
+PropertyValuesHolder rightFlipHolder = PropertyValuesHolder.ofFloat("rightFlip", -45);
+PropertyValuesHolder canvasRotationHolder = PropertyValuesHolder.ofFloat("canvasRotation", 270);
+PropertyValuesHolder leftFlipHolder = PropertyValuesHolder.ofFloat("leftFlip", 45);
+ObjectAnimator objectAnimator = ObjectAnimator.ofPropertyValuesHolder(view, rightFlipHolder, canvasRotationHolder, leftFlipHolder);
+objectAnimator.setStartDelay(1000);
+objectAnimator.setDuration(2000);
+objectAnimator.start();
+
+// 这个效果等于 animatorSet.playTogether(...)
 ```
 
-### KeyFrame - 一个动画的多个关键帧
+### 2. KeyFrame - 一个动画的多个关键帧 `PropertyValuesHolder.ofKeyFrame("transationX", keyframe1, .. keyframeX) ... ObjectAnimator.ofPropertyValuesHolder(targetView, propertyValuesHolder)`
 
 ```
-PropertyValuesHolder.ofKeyFrame("translationX", keyFrame1, keyFrame2, kf3, kf4)
+Keyframe keyframe1 = Keyframe.ofFloat(0, 0);
+Keyframe keyframe2 = Keyframe.ofFloat(0.2f, 0.4 * max); // 时间完成度 20%, 任务完成度 40%
+Keyframe keyframe3 = Keyframe.ofFloat(0.8f, 0.6 * max); // 时间完成度 80%, 任务完成度 60%
+Keyframe keyframe4 = Keyframe.ofFloat(1, 1 * max);
+PropertyValuesHolder valuesHolder = PropertyValuesHolder.ofKeyFrame("translationX", keyframe1, keyframe2, keyframe3, keyframe4); // 改变指定属性, 并应用关键帧确定改变速率
+ObjectAnimator animator = ObjectAnimator.ofPropertyValuesHolder(view, valuesHolder);
+animator.setStartDelay(1000);
+animator.setDuration(1000);
+animator.start();
 ```
 
 ##### ValueAnimator
@@ -69,7 +87,7 @@ view.animate()
 
 #### TypeEvaluator - 估值器
 
-ObjectAnimator.ofObject
+ObjectAnimator.ofObject(targetView, "propertyName", typeEvaluator, targetPropertyValue)
 
 class PointEvaluator implements TypeEvaluator<Point> {
 	@Override
