@@ -14,6 +14,8 @@ class MainActivity : AppCompatActivity() {
 
     private var cameraView: CameraView? = null
 
+    private var cameraViewRight: CameraViewRight? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -21,28 +23,45 @@ class MainActivity : AppCompatActivity() {
         init()
 //        testViewPropertyAnimation()
 //        testObjectAnimator()
-        testCameraView()
+//        testCameraView()
     }
 
     private fun init() {
 //        mImageView = findViewById(R.id.image)
 //        circleView = findViewById(R.id.circle_view)
-        cameraView = findViewById(R.id.camera_view)
-    }
+//        cameraView = findViewById(R.id.camera_view)
+        cameraViewRight = findViewById(R.id.camera_view_right)
 
-    private fun testCameraView() {
-        var animator1 = ObjectAnimator.ofFloat(cameraView!!, "bottomFlip", 45F)
+
+        var animator1 = ObjectAnimator.ofFloat(cameraViewRight!!, "rightFlip", -45F)
         animator1.duration = 1000
-        var animator2 = ObjectAnimator.ofFloat(cameraView!!, "canvasRotate", 270F)
+
+        var animator2 = ObjectAnimator.ofFloat(cameraViewRight!!, "canvasRotation", 270F)
         animator2.duration = 1000
-        var animator3 = ObjectAnimator.ofFloat(cameraView!!, "topFlip", -45F)
+
+        var animator3 = ObjectAnimator.ofFloat(cameraViewRight!!, "leftFlip", 45F)
         animator3.duration = 1000
 
         var animatorSet = AnimatorSet()
-        animatorSet.startDelay = 1000
         animatorSet.playSequentially(animator1, animator2, animator3)
+        animatorSet.startDelay = 1000
         animatorSet.start()
+
     }
+
+//    private fun testCameraView() {
+//        var animator1 = ObjectAnimator.ofFloat(cameraView!!, "bottomFlip", 45F)
+//        animator1.duration = 1000
+//        var animator2 = ObjectAnimator.ofFloat(cameraView!!, "canvasRotate", 270F)
+//        animator2.duration = 1000
+//        var animator3 = ObjectAnimator.ofFloat(cameraView!!, "topFlip", -45F)
+//        animator3.duration = 1000
+//
+//        var animatorSet = AnimatorSet()
+//        animatorSet.startDelay = 1000
+//        animatorSet.playSequentially(animator1, animator2, animator3)
+//        animatorSet.start()
+//    }
 
 //    private fun testObjectAnimator() {
 //        var animator = ObjectAnimator.ofFloat(circleView!!, "radius", 200F)
