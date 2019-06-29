@@ -18,7 +18,7 @@ class PointView (context: Context, attributeSet: AttributeSet): View(context, at
         }
 
     init {
-        paint.strokeWidth = Util().dp2px(30)
+        paint.strokeWidth = Util.dp2px(30)
         paint.strokeCap = Paint.Cap.ROUND
     }
 

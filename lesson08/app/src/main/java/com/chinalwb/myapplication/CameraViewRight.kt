@@ -32,11 +32,11 @@ class CameraViewRight (context: Context, attributeSet: AttributeSet): View(conte
             invalidate()
         }
 
-    private val LEFT = Util().dp2px(100)
-    private val TOP = Util().dp2px(100)
+    private val LEFT = Util.dp2px(100)
+    private val TOP = Util.dp2px(100)
 
     init {
-        bitmap = getBitmap(R.drawable.rengwuxian, Util().dp2px(200).toInt())
+        bitmap = getBitmap(R.drawable.rengwuxian, Util.dp2px(200).toInt())
         bitmapWidth = bitmap!!.width
         bitmapHeight = bitmap!!.height
 

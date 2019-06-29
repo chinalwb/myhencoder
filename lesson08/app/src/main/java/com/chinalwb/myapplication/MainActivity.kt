@@ -68,8 +68,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun testTypeEvaluator() {
         val targetPoint = Point(
-            Util().dp2px(300).toInt(),
-            Util().dp2px(300).toInt()
+            Util.dp2px(300).toInt(),
+            Util.dp2px(300).toInt()
         )
         var animator = ObjectAnimator.ofObject(
             pointView, "point",

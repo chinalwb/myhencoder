@@ -47,7 +47,7 @@ class StringView(context: Context, attributeSet: AttributeSet) : View(context, a
         }
 
     init {
-        paint.textSize = Util().dp2px(30)
+        paint.textSize = Util.dp2px(30)
         paint.textAlign = Paint.Align.CENTER
     }
 

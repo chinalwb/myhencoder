@@ -20,13 +20,12 @@ public class PointViewJava extends View {
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
-        paint.setStrokeWidth(new Util().dp2px(20));
+        paint.setStrokeWidth(Util.Companion.dp2px(20));
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-
         canvas.drawPoint(point.x, point.y, paint);
     }
 
