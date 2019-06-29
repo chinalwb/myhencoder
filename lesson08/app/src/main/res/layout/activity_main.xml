@@ -33,8 +33,13 @@
 
     <!--</com.chinalwb.myapplication.CameraViewRight>-->
 
-    <com.chinalwb.myapplication.PointView
-            android:id="@+id/point"
+    <!--<com.chinalwb.myapplication.PointView-->
+    <!--android:id="@+id/point"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"/>-->
+
+    <com.chinalwb.myapplication.StringView
+            android:id="@+id/string_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
 

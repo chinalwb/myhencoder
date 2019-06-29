@@ -5,6 +5,8 @@ import android.graphics.Point
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.animation.AccelerateInterpolator
+import android.view.animation.DecelerateInterpolator
 import android.widget.ImageView
 
 class MainActivity : AppCompatActivity() {
@@ -19,6 +21,8 @@ class MainActivity : AppCompatActivity() {
 
     private var pointView: PointView? = null
 
+    private var stringView: StringView? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -29,7 +33,8 @@ class MainActivity : AppCompatActivity() {
 //        testCameraView()
 //        testCameraViewRight()
 //        testPropertyValuesHolder()
-        testTypeEvaluator()
+//        testTypeEvaluator()
+        testStringViewAnimator()
     }
 
     private fun init() {
@@ -37,7 +42,28 @@ class MainActivity : AppCompatActivity() {
 //        circleView = findViewById(R.id.circle_view)
 //        cameraView = findViewById(R.id.camera_view)
 //        cameraViewRight = findViewById(R.id.camera_view_right)
-        pointView = findViewById(R.id.point)
+//        pointView = findViewById(R.id.point)
+        stringView = findViewById(R.id.string_view)
+    }
+
+    private fun testStringViewAnimator() {
+        var animator = ObjectAnimator.ofObject(
+            stringView,
+            "index",
+            object : TypeEvaluator<Int> {
+                override fun evaluate(fraction: Float, startValue: Int?, endValue: Int?): Int {
+                    println("start valule >> " + startValue)
+                    return startValue!! + ((endValue!! - startValue) * fraction).toInt()
+                }
+            },
+            StringView.strings.size - 1
+        )
+
+        animator.interpolator = AccelerateInterpolator()
+
+        animator.startDelay = 1000
+        animator.duration = 2000
+        animator.start()
     }
 
     private fun testTypeEvaluator() {
@@ -45,8 +71,10 @@ class MainActivity : AppCompatActivity() {
             Util().dp2px(300).toInt(),
             Util().dp2px(300).toInt()
         )
-        var animator = ObjectAnimator.ofObject(pointView, "point",
-            PointTypeEvaluator(), targetPoint)
+        var animator = ObjectAnimator.ofObject(
+            pointView, "point",
+            PointTypeEvaluator(), targetPoint
+        )
         animator.duration = 1000
         animator.start()
     }
