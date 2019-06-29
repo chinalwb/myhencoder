@@ -1,10 +1,12 @@
 #### 属性动画，Bitmap / drawable, 硬件加速
 
 
-##### ViewPropertyAnimator
+##### android.view.ViewPropertyAnimator
+
+在同时改变多个属性值的动画中, ViewPropertyAnimator 的性能要优于ObjectAnimator, 因为他是一次性更新所有的 property, 触发一次 invalidate, 改变多个属性值.
 
 ```
-view.animate()
+view.animate() // ViewPropertyAnimator
 	.translationX(200)
 	.translationY(100)
 	.rotation(180)
@@ -95,6 +97,58 @@ class PointEvaluator implements TypeEvaluator<Point> {
 		// (endValue - startValue) * fraction + startValue
 	}
 }
+
+
+### ViewPropertyAnimator / ObjectAnimator / ValueAnimator / PropertyValuesHolder / Keyframe / Keyframes 到底有什么关系?
+```
+ViewPropertyAnimator
+	底层用到了 ValueAnimator
+	将所有修改的属性保存到了NameValuesHolder 对象当中
+	执行 start 方法的时候, 执行到的代码是:
+	ValueAnimator.addUpdateListener(mAnimatorEventListener);
+	其中:
+	mAnimatorEventListener#onAnimationUpdate
+	方法会把所有修改的属性一次性修改(调用 setValue 方法)
+	然后只执行一次 invalidate
+
+view.animate()
+	.translateX(100)
+	.translateY(100)
+	.rotate(45)
+	.start();
+
+
+
+ObjectAnimator
+	继承了 ValueAnimator
+
+	ObjectAnimator.ofFloat(view, "translationX", 100)
+	ObjectAnimator.ofFloat(view, "translationY", 100)
+
+	ObjectAnimator.ofPropertyValuesHolder(view, pvh1, pvh2)
+
+	这些方法其实都是往 ValueAnimator 当中的 mValues 里面加了 PropertyValueHolder
+
+
+
+ValueAnimator
+
+
+
+PropertyValuesHolder
+	
+	PropertyValuesHolder.ofFloat("property", 200F)
+		最终也是添加 Keyframe 保存起来
+
+	PropertyValuesHolder.ofKeyFrame("translationX", keyframe1, keyframe2)
+		最终是添加 Keyframe 
+
+	calculateValue(float fraction) // 根据完成度返回相应值
+
+
+android.animation.Keyframe
+android.animation.Keyframes
+```
 
 
 
