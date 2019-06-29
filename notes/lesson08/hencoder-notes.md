@@ -3,6 +3,8 @@
 
 ##### android.view.ViewPropertyAnimator
 
+在同时改变多个属性值的动画中, ViewPropertyAnimator 的性能要优于ObjectAnimator, 因为他是一次性更新所有的 property, 触发一次 invalidate, 改变多个属性值.
+
 ```
 view.animate() // ViewPropertyAnimator
 	.translationX(200)
