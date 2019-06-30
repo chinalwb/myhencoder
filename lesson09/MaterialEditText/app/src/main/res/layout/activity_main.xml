@@ -5,29 +5,61 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".MainActivity">
+    tools:context="com.chinalwb.MainActivity">
 
-    <EditText
+    <!--<EditText-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--/>-->
+
+    <!--<LinearLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--&gt;-->
+    <!--<com.chinalwb.materialedittext.MaterialEditText-->
+    <!--android:id="@+id/material_edit_text"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--app:useFloatingLabel="false"-->
+    <!--android:hint="Username"-->
+    <!--/>-->
+    <!--</LinearLayout>-->
+
+    <!--<Button-->
+    <!--android:id="@+id/toggle_button"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:text="Toggle Floating Label"/>-->
+
+    <!--<com.chinalwb.test06.PathTest-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent" />-->
+
+    <!--<com.chinalwb.drawable.FloatingTextView-->
+    <!--android:id="@+id/floating_view"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent" />-->
+
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        />
+        android:background="#CCC">
 
-    <LinearLayout
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </FrameLayout>
+
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        >
-        <com.chinalwb.materialedittext.MaterialEditText
-            android:id="@+id/material_edit_text"
+        android:background="#AAC">
+
+        <com.chinalwb.me2.MaterialEditText2
+            android:id="@+id/me_2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:useFloatingLabel="false"
-            android:hint="Username"
-            />
-    </LinearLayout>
-
-    <Button
-        android:id="@+id/toggle_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Toggle Floating Label"/>
+            app:floatingLabelEnabled="true"
+            android:hint="Username" />
+    </FrameLayout>
 </LinearLayout>
