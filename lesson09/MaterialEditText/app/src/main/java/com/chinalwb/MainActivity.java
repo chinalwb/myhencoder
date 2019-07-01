@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void init() {
 //        floatingTextView = findViewById(R.id.floating_view);
-        m2 = findViewById(R.id.me_2);
+//        m2 = findViewById(R.id.me_2);
 
 //        toggleFloatingLabel();
     }

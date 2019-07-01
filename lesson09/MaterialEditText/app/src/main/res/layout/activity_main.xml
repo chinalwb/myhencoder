@@ -40,26 +40,30 @@
     <!--android:layout_width="match_parent"-->
     <!--android:layout_height="match_parent" />-->
 
-    <FrameLayout
+    <!--<FrameLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:background="#CCC">-->
+
+        <!--<EditText-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content" />-->
+    <!--</FrameLayout>-->
+
+    <!--<FrameLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:background="#AAC">-->
+
+        <!--<com.chinalwb.me2.MaterialEditText2-->
+            <!--android:id="@+id/me_2"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--app:floatingLabelEnabled="true"-->
+            <!--android:hint="Username" />-->
+    <!--</FrameLayout>-->
+
+    <com.chinalwb.drawable.ChessView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#CCC">
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </FrameLayout>
-
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#AAC">
-
-        <com.chinalwb.me2.MaterialEditText2
-            android:id="@+id/me_2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:floatingLabelEnabled="true"
-            android:hint="Username" />
-    </FrameLayout>
+        android:layout_height="match_parent" />
 </LinearLayout>
