@@ -1,4 +1,4 @@
-package com.chinalwb.taglayout;
+package com.chinalwb.taglayout.v1;
 
 import android.content.Context;
 import android.graphics.Rect;

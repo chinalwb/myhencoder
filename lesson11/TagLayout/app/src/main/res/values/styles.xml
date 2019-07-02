@@ -1,4 +1,7 @@
-<resources>
+<resources
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
@@ -8,4 +11,9 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+
+    <style name="CircleTheme">
+        <item name="strokeWidth">5dp</item>
+        <item name="strokeColor">@color/colorPrimaryDark</item>
+    </style>
 </resources>

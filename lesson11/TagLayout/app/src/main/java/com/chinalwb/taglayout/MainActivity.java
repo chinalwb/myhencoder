@@ -2,7 +2,11 @@ package com.chinalwb.taglayout;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.ViewGroup;
+
+import com.chinalwb.taglayout.v1.ColorTextView;
+import com.chinalwb.taglayout.v1.TagLayout;
+import com.chinalwb.taglayout.v2.FlowLayout;
+import com.chinalwb.taglayout.v2.SquareImageView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -15,21 +19,36 @@ public class MainActivity extends AppCompatActivity {
 
     private TagLayout tagLayout;
 
+    private FlowLayout flowLayout;
+
+    private SquareImageView squareImageView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        tagLayout = findViewById(R.id.tag_layout);
+//        test();
+
+        flowLayout = findViewById(R.id.flow_layout);
 
         addProvinces();
+    }
+
+    private void test () {
+//        squareImageView = findViewById(R.id.square_image_view);
+//        squareImageView.postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                squareImageView.changeSize();
+//            }
+//        }, 2000);
     }
 
     private void addProvinces() {
         for (String x : PROVINCES) {
             ColorTextView colorTextView = new ColorTextView(this);
             colorTextView.setText(x);
-            this.tagLayout.addView(colorTextView);
+            this.flowLayout.addView(colorTextView);
         }
     }
 }

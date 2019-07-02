@@ -5,63 +5,63 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <com.chinalwb.taglayout.TagLayout
-        android:id="@+id/tag_layout"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:background="@android:color/background_dark">
-
-        <!--<com.chinalwb.taglayout.ColorTextView-->
+    <!--<com.chinalwb.taglayout.v1.TagLayout-->
+        <!--android:id="@+id/tag_layout"-->
         <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:text="Hello X1"-->
-        <!--/>-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:background="@android:color/background_dark">-->
 
-    </com.chinalwb.taglayout.TagLayout>
+        <!--&lt;!&ndash;<com.chinalwb.taglayout.v1.ColorTextView&ndash;&gt;-->
+        <!--&lt;!&ndash;android:layout_width="wrap_content"&ndash;&gt;-->
+        <!--&lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;-->
+        <!--&lt;!&ndash;android:text="Hello X1"&ndash;&gt;-->
+        <!--&lt;!&ndash;/>&ndash;&gt;-->
+
+    <!--</com.chinalwb.taglayout.v1.TagLayout>-->
 
 
-    <!--<com.chinalwb.taglayout.TagLayout-->
+    <!--<com.chinalwb.taglayout.v1.TagLayout-->
         <!--android:layout_width="match_parent"-->
         <!--android:layout_height="130dp"-->
         <!--android:background="@android:color/background_dark">-->
 
-        <!--<com.chinalwb.taglayout.ColorTextView-->
+        <!--<com.chinalwb.taglayout.v1.ColorTextView-->
             <!--android:layout_width="wrap_content"-->
             <!--android:layout_height="wrap_content"-->
             <!--android:text="Hello X1"-->
             <!--/>-->
 
-        <!--<com.chinalwb.taglayout.ColorTextView-->
+        <!--<com.chinalwb.taglayout.v1.ColorTextView-->
             <!--android:layout_width="wrap_content"-->
             <!--android:layout_height="wrap_content"-->
             <!--android:text="Hello X2222"-->
             <!--android:textColor="@android:color/white"-->
             <!--/>-->
 
-        <!--<com.chinalwb.taglayout.ColorTextView-->
+        <!--<com.chinalwb.taglayout.v1.ColorTextView-->
             <!--android:layout_width="wrap_content"-->
             <!--android:layout_height="wrap_content"-->
             <!--android:text="Hello X1"-->
             <!--/>-->
 
-        <!--<com.chinalwb.taglayout.ColorTextView-->
+        <!--<com.chinalwb.taglayout.v1.ColorTextView-->
             <!--android:layout_width="wrap_content"-->
             <!--android:layout_height="wrap_content"-->
             <!--android:text="Hello X2 22222"-->
             <!--android:textColor="@android:color/white"-->
             <!--/>-->
 
-        <!--<com.chinalwb.taglayout.ColorTextView-->
+        <!--<com.chinalwb.taglayout.v1.ColorTextView-->
             <!--android:layout_width="wrap_content"-->
             <!--android:layout_height="wrap_content"-->
             <!--android:text="Hello X2 22222"-->
             <!--android:textColor="@android:color/white"-->
             <!--/>-->
 
-        <!--<com.chinalwb.taglayout.ColorTextView-->
+        <!--<com.chinalwb.taglayout.v1.ColorTextView-->
             <!--android:layout_width="wrap_content"-->
             <!--android:layout_height="wrap_content"-->
             <!--android:text="Hello X2 22222"-->
@@ -69,14 +69,14 @@
             <!--/>-->
 
 
-        <!--<com.chinalwb.taglayout.ColorTextView-->
+        <!--<com.chinalwb.taglayout.v1.ColorTextView-->
             <!--android:layout_width="wrap_content"-->
             <!--android:layout_height="wrap_content"-->
             <!--android:text="Hello X2 22222"-->
             <!--android:textColor="@android:color/white"-->
             <!--/>-->
 
-        <!--<com.chinalwb.taglayout.ColorTextView-->
+        <!--<com.chinalwb.taglayout.v1.ColorTextView-->
             <!--android:layout_width="wrap_content"-->
             <!--android:layout_height="wrap_content"-->
             <!--android:text="Hello X3"-->
@@ -112,8 +112,106 @@
             <!--android:layout_width="wrap_content"-->
             <!--android:layout_height="wrap_content"-->
             <!--android:text="Hello 5"/>-->
-    <!--</com.chinalwb.taglayout.TagLayout>-->
+    <!--</com.chinalwb.taglayout.v1.TagLayout>-->
 
 
 
+
+    <!--<com.chinalwb.taglayout.v2.SquareImageView-->
+        <!--android:id="@+id/square_image_view"-->
+        <!--android:src="@drawable/google"-->
+        <!--android:layout_width="100dp"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:scaleType="centerCrop"-->
+        <!--/>-->
+
+    <!--<TextView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="Hello"-->
+        <!--android:layout_weight="1"-->
+        <!--android:background="@color/colorPrimary"-->
+        <!--/>-->
+
+    <!--<com.chinalwb.taglayout.v2.CircleView-->
+        <!--android:id="@+id/circle_view"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--style="@style/CircleTheme"-->
+        <!--android:layout_weight="2"-->
+        <!--/>-->
+
+    <!--<TextView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="World!"-->
+        <!--android:layout_weight="1"-->
+        <!--android:background="@color/colorPrimary"-->
+        <!--/>-->
+
+
+    <com.chinalwb.taglayout.v2.FlowLayout
+        android:id="@+id/flow_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary" />
+
+        <!--<Button-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="Hello"-->
+            <!--android:textSize="18sp"-->
+            <!--/>-->
+
+        <!--<Button-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="World"-->
+            <!--android:textSize="50sp"-->
+            <!--/>-->
+
+        <!--<Button-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="Hello"-->
+            <!--android:textSize="18sp"-->
+            <!--/>-->
+
+        <!--<Button-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="WorldX"-->
+            <!--android:textSize="30sp"-->
+            <!--android:layout_marginTop="100dp"-->
+            <!--/>-->
+
+        <!--<Button-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="HelloX"-->
+            <!--android:textSize="18sp"-->
+            <!--/>-->
+
+        <!--<Button-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="Worldsssssssssssssxxxxxxxxxx"-->
+            <!--android:textSize="20sp"-->
+            <!--/>-->
+
+        <!--<Button-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="Hello"-->
+            <!--android:textSize="18sp"-->
+            <!--/>-->
+
+        <!--<Button-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="World"-->
+            <!--android:textSize="20sp"-->
+            <!--android:layout_marginTop="20dp"-->
+            <!--/>-->
+    <!--</com.chinalwb.taglayout.v2.FlowLayout>-->
 </LinearLayout>
