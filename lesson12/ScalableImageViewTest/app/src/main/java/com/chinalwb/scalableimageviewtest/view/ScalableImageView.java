@@ -30,7 +30,7 @@ public class ScalableImageView extends View implements
     private boolean isBig;
     private float fraction;
     private ObjectAnimator animator;
-    private int smallScale = 1, bigScale = 10;
+    private int smallScale = 1, bigScale = 1;
     private float translateY, oy;
 
     private GestureDetectorCompat gestureDetectorCompat;
@@ -49,7 +49,9 @@ public class ScalableImageView extends View implements
         gestureDetectorCompat.setOnDoubleTapListener(this);
         overScroller = new OverScroller(getContext());
         sw = Resources.getSystem().getDisplayMetrics().widthPixels;
-        bitmap = Utils.getBitmap(getResources(), R.drawable.timg, sw / bigScale);
+        bitmap = Utils.getBitmap(getResources(), R.drawable.ttt, sw / 4);
+
+        bigScale = sw / bitmap.getWidth();
     }
 
     @Override

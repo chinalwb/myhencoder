@@ -29,6 +29,14 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        a2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getBaseContext(), ScalableImageViewActivity2.class);
+                startActivity(intent);
+            }
+        });
     }
 
 
