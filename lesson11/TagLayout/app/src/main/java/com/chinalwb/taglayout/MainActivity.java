@@ -2,6 +2,10 @@ package com.chinalwb.taglayout;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.MotionEvent;
+import android.view.View;
+import android.widget.Toast;
 
 import com.chinalwb.taglayout.v1.ColorTextView;
 import com.chinalwb.taglayout.v1.TagLayout;
@@ -27,11 +31,34 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+
+        testClick();
+
 //        test();
 
-        flowLayout = findViewById(R.id.flow_layout);
+//        flowLayout = findViewById(R.id.flow_layout);
 
-        addProvinces();
+//        addProvinces();
+    }
+
+    private void testClick() {
+        View view1 = findViewById(R.id.view_1);
+        View view2 = findViewById(R.id.view_2);
+
+        view1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(MainActivity.this, "View - Left", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        view2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(MainActivity.this, "View - right", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void test () {
@@ -50,5 +77,17 @@ public class MainActivity extends AppCompatActivity {
             colorTextView.setText(x);
             this.flowLayout.addView(colorTextView);
         }
+    }
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        Log.w("XX", "MainActivity >> dispatch touch event");
+        return super.dispatchTouchEvent(ev);
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        Log.w("XX", "MainActivity >> onTouchEvent");
+        return super.onTouchEvent(event);
     }
 }

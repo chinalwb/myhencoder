@@ -150,11 +150,11 @@
         <!--/>-->
 
 
-    <com.chinalwb.taglayout.v2.FlowLayout
-        android:id="@+id/flow_layout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@color/colorPrimary" />
+    <!--<com.chinalwb.taglayout.v2.FlowLayout-->
+        <!--android:id="@+id/flow_layout"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:background="@color/colorPrimary" />-->
 
         <!--<Button-->
             <!--android:layout_width="wrap_content"-->
@@ -214,4 +214,24 @@
             <!--android:layout_marginTop="20dp"-->
             <!--/>-->
     <!--</com.chinalwb.taglayout.v2.FlowLayout>-->
+
+
+    <com.chinalwb.taglayout.touch.TouchLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <com.chinalwb.taglayout.touch.TouchView
+            android:id="@+id/view_1"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            app:viewName="Left"
+            android:background="@color/colorAccent" />
+
+        <com.chinalwb.taglayout.touch.TouchView
+            android:id="@+id/view_2"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            app:viewName="Right"
+            android:background="@color/colorPrimaryDark"
+            />
+    </com.chinalwb.taglayout.touch.TouchLayout>
 </LinearLayout>

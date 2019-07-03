@@ -76,8 +76,6 @@ class FlowLayout(context: Context, attributeSet: AttributeSet) : ViewGroup(conte
         super.onDraw(canvas)
 
         Log.w("XX", "FlowLayout on draw!!")
-
-
     }
 
     // 用代码 FlowLayout#addView 的方式添加的子view 用这个方法来设置 MarginLayoutParams
