@@ -4,7 +4,7 @@ import android.content.Context
 import android.util.AttributeSet
 import android.util.Log
 import android.view.MotionEvent
-import android.view.MotionEvent.ACTION_UP
+import android.view.MotionEvent.*
 import android.view.View
 import com.chinalwb.taglayout.R
 
@@ -29,7 +29,26 @@ class TouchView (context: Context, attributeSet: AttributeSet) : View(context, a
             performClick()
         }
 
-        Log.w("XX", "View --> In TouchView name is : $viewName")
+        var eventName = ""
+        when (event?.actionMasked) {
+            ACTION_DOWN -> {
+                eventName = "ACTION_DOWN"
+            }
+            ACTION_MOVE -> {
+                eventName = "ACTION_MOVE"
+            }
+            ACTION_UP -> {
+                eventName = "ACTION_UP"
+            }
+            ACTION_CANCEL -> {
+                eventName = "ACTION_CANCEL"
+            }
+            else -> {
+                eventName = event?.actionMasked.toString()
+            }
+        }
+
+        Log.w("XX", "View --> In TouchView name is : $viewName :::: $eventName")
         return true
     }
 }

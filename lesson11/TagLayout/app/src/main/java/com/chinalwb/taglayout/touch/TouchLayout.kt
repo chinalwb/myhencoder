@@ -38,10 +38,15 @@ class TouchLayout (context: Context, attributeSet: AttributeSet) : LinearLayout(
         return super.dispatchTouchEvent(ev)
     }
 
+    var ox = 0F
     override fun onInterceptTouchEvent(ev: MotionEvent?): Boolean {
-        Log.w("XX", "ViewGroup >>>> onInterceptTouchEvent!!")
-        return super.onInterceptTouchEvent(ev)
-//        return true
+        if (ev!!.actionMasked == MotionEvent.ACTION_DOWN) {
+            ox = ev.x
+        }
+
+        var intercept = ev.x - ox > 100
+        Log.w("XX", "ViewGroup >>>> onInterceptTouchEvent!! $intercept")
+        return intercept
     }
 
     override fun onTouchEvent(event: MotionEvent?): Boolean {
