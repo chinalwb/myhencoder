@@ -74,4 +74,4 @@
 ## 其他相关
 1. [为什么wait / notify必须在synchronize方法或代码块中运行？](./notes/others/why-wait-and-notify-have-to-be-in-synchronized.md)
 2. [Java GC Roots 和 内存分区的垃圾回收相关](https://www.w3resource.com/java-tutorial/garbage-collection-in-java.php)
-3. [Bitmap 优化管理](./notes/others/Bitmap 优化管理)
+3. [Bitmap 优化管理](./notes/others/Bitmap%20优化管理)
