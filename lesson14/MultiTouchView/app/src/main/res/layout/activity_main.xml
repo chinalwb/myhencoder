@@ -34,20 +34,24 @@
 
     <!--</com.chinalwb.multitouchview.view.TwoPagerView>-->
 
-    <com.chinalwb.multitouchview.view2.TwoPageViewPager
+    <!--<com.chinalwb.multitouchview.view2.TwoPageViewPager-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content">-->
+
+        <!--<View-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:background="@color/colorAccent"-->
+            <!--/>-->
+
+        <!--<View-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:background="@color/colorPrimaryDark"-->
+            <!--/>-->
+    <!--</com.chinalwb.multitouchview.view2.TwoPageViewPager>-->
+
+    <com.chinalwb.multitouchview.view2.Gallery
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-
-        <View
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@color/colorAccent"
-            />
-
-        <View
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@color/colorPrimaryDark"
-            />
-    </com.chinalwb.multitouchview.view2.TwoPageViewPager>
+        android:layout_height="wrap_content" />
 </LinearLayout>
