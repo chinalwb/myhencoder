@@ -1,7 +1,34 @@
 #### 拖拽和滑动冲突
 
 * ViewDragHelper
+  * 从底部或侧方滑出菜单
+  * 真正的移动 view
 * OnDragListener
+  * 内容的移动
+  * ViewCompat.startDragAndDrop(view, ClipData, DragShadowbuilder, localState, flags)
+
+
+
+```java
+class CollectionListener implements OnDragListener {
+  
+}
+
+xxView.setOnLongClickListener(dragStarter);
+xxView.setOnDragListener(dragListener);
+
+OnLongClickListener dragStarter = new OnLongClickListener() {
+  @Override
+  public boolean onLongClick(View v) {
+    ClipData imageData = xxx;
+    return ViewCompat.startDragAndDrop(view, imageData, DragShadowBuilder, localState, flags)
+  }
+}
+```
+
+
+
+
 
 #### DragHelperGridView
 * onMeasure
