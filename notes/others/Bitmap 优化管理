@@ -1,0 +1,73 @@
+Bitmap 优化管理
+
+1. BitmapFactory.Options
+	inSampleSize 
+	设置采样率
+	比如 inSampleSize = 2
+	则 decode 出来的 bitmap 的 width 和 height 均为原始尺寸的二分之一
+	则图片的整体像素数变为原图像的四分之一
+
+	inSampleSize 默认为 2 的整数次幂
+	如果设置的数字不是 2 的整数次幂, 则默认向下取 2 的整数次幂
+	比如当设置了 inSampleSize = 7 的时候, inSampleSize 默认改成 4 (小于 7 的最小的 2 的整数次幂)
+
+	这个参数的特点是速度快,但无法将图片缩放到某个指定的精确尺寸大小
+
+2. inDensity / inTargetDensity
+inDensity 是起始尺寸
+inTargetDensity 是目标尺寸
+当这两个参数同时设置的时候 目的是将图片从原始尺寸缩放到目标尺寸大小
+这个参数的特点是可以精确设置图片缩放的大小,但速度较慢
+
+3. 通常情况下可以结合 inSampleSize 和 inDensity / inTargetDensity 一起使用
+先用 inSampleSize 将图片缩放到一个距离目标尺寸较近的大小
+然后再用 inDensity / inTargetDensity 做精确调整
+这样结合了 inSampleSize 的速度以及 inTargetDensity 的精度
+
+4. 如果用 AsyncTask 加载并设置图片, 应该对 ImageView 持有弱引用, 以免当 Activity onDestroy 被回收时 ImageView 被 AsyncTask 持有而无法回收
+
+5. 图片的 LRU 缓存. LruCache<Key, Value>(cacheSize)
+LRU 缓存的工作方式是, 在内存中开辟一段空间, 保存最近访问过的Bitmap
+如果要访问的 bitmap 没有存在于缓存栈中, 则添加到缓存栈中(可以是栈顶也可以是栈底, 看具体设计)
+如果要访问的 bitmap 已经存在于缓存中了, 则将这个 bitmap 返回, 同时将这个 bitmap 移动到缓存栈的顶部
+缓存淘汰算法是从缓存队列的底部开始淘汰, 也就是从最近最少使用的元素开始淘汰
+
+6. LruCache 是只存在于内存中的, 当 Activity 退出之后就会消失. 如果想持久缓存下载过的图片
+则需要使用 DiskLRUCache
+DiskLRUCache.open(cacheDir, DISK_CACHE_SIZE)
+
+7. 这样当加载图片的时候, 先检查要加载的图片是否在内存中(LruCache), 如果不在内存缓存的话则检查是否在磁盘缓存中(DiskLRUCache). 如果还不在, 则可以用持有 ImageView 弱引用的 AsyncTask 去下载.
+
+下载完图片之后, 在显示之前, 使用 inSampleSize 和 inDensity / inTargetDensity 结合的方式去压缩, 最后显示.
+
+8. 图片的显示方式
+默认的像素格式是用 ARGB_8888, 即 Alpha / R / G / B 各占 1 个 Byte (8 bit), 用 4 个 Bytes(32 bits)描述一个像素
+其他可选的像素格式还有:
+ARGB_4444. 用 16 bits 描述一个像素, 显示效果不好.
+RGB_565. 即 R / G / B 分别占用 5 bits / 6 bits / 5 bits 共计 16bits 的方式显示一个像素, 如果图片没有 Alpha 通道则这个方式也不错
+ALPHA_8. 仅存储 ALPHA 通道, 没有颜色信息
+
+BitmapFactory.Options.inPerferredConfig = Bitmap.Config.ARGB_4444 
+来为bitmap 设置显示方式
+
+9. Bitmap 的重用 BitmapFactory.Options.inBitmap
+options.inMutable = true
+options.inBitmap = getBitmapFromPool(options)
+
+这种方式是处理当图片显示在 List 或 Grid 控件时
+用户上下滑动的时候, 被隐藏的图片可以被重用至新显示的图片的位置
+
+配合对象池模式来实现
+当图片要显示的时候, 先检查对象池中是否有可以重用的图片
+如果有则直接重用, 如果没有则将图片加到对象池中
+这种方式的好处是, 被隐藏的图片不需要被垃圾回收
+而新显示的图片的也不需要重新创建
+
+图片是否可以重用是有限制条件的
+在 API level <= 18 时, 被重用的图片必须跟新的要显示的图片具有完全相同的尺寸
+在 API level >= 19 时, 被重用的图片的尺寸大于等于新的要显示的图片即可
+
+10. 图像优化
+* 如果在像素分辨率较低的手机上运行, 则不需要加载分辨率较高的高清图片
+* 如果图片要被用在尺寸不同的控件上, 则只需要下载一次分辨率较高的图片, 然后使用图片压缩算法应用到各个控件上
+
