@@ -1,5 +1,8 @@
 package com.chinalwb.multitouchview.view2
 
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
+import android.animation.ObjectAnimator
 import android.animation.PropertyValuesHolder
 import android.content.Context
 import android.graphics.*
@@ -11,7 +14,13 @@ import com.chinalwb.multitouchview.R
 import com.chinalwb.multitouchview.Utils
 import kotlin.math.*
 
+private var flipDuration = 1000L
+
 class Gallery (context: Context, attributeSet: AttributeSet) : View (context, attributeSet) {
+
+    companion object {
+        private const val NINETY_DEGREE = 89.99F
+    }
 
     private var paint: Paint = Paint(Paint.ANTI_ALIAS_FLAG)
     private var camera = Camera()
@@ -22,24 +31,92 @@ class Gallery (context: Context, attributeSet: AttributeSet) : View (context, at
     private var upDegree = arrayOf(0F, 0F, -180F)
     private var downDegree = arrayOf(180F, 0F, 0F)
 
-//    private var upDegree = arrayOf(0F, 0F, -180F)
-//    private var downDegree = arrayOf(180F, 0F, 0F)
+    private var upDegree0 = 0F
+        set(value) {
+            field = value
+            invalidate()
+        }
+    private var upDegree1 = 0F
+        set(value) {
+            field = value
+            invalidate()
+        }
+    private var upDegree2 = -180F
+        set(value) {
+            field = value
+            invalidate()
+        }
 
-//    private var upAlpha[index][index - 1] = 0
-//    private var downAlpha[index - 1] = 0
-    private var upAlpha = arrayOf(0, 0, 255)
-    private var downAlpha = arrayOf(255, 0, 255)
+    private var downDegree0 = 180F
+        set(value) {
+            field = value
+            invalidate()
+        }
+    private var downDegree1 = 0F
+        set(value) {
+            field = value
+            invalidate()
+        }
+    private var downDegree2 = 0F
+        set(value) {
+            field = value
+            invalidate()
+        }
 
-    private var index = 2
+
+//    private var upAlpha = arrayOf(0, 0, 255)
+//    private var downAlpha = arrayOf(255, 0, 255)
+
+    private var upAlpha0 = 0
+        set(value) {
+            field = value
+            invalidate()
+        }
+    private var upAlpha1 = 255
+        set(value) {
+            field = value
+            invalidate()
+        }
+    private var upAlpha2 = 255
+        set(value) {
+            field = value
+            invalidate()
+        }
+
+    private var downAlpha0 = 255
+        set(value) {
+            field = value
+            invalidate()
+        }
+    private var downAlpha1 = 255
+        set(value) {
+            field = value
+            invalidate()
+        }
+    private var downAlpha2 = 255
+        set(value) {
+            field = value
+            invalidate()
+        }
+
+    private var index = 0
     private var max = 3
     private var bitmaps: Array<Bitmap?> = arrayOfNulls(3)
 
     init {
-        camera.setLocation(0F, 0F, -12 * context.resources.displayMetrics.density)
+        // -200 这个z轴高度实在尴尬
+        // 因为在计算bitmap rotateX 之后在 X 轴的投影距离遇到了困难
+        // 目前用的 cos(θ) 代替
+        // 较大的数字可以减少投影和 cos(θ)的差距
+        camera.setLocation(0F, 0F, -200 * context.resources.displayMetrics.density)
         paint.textAlign = Paint.Align.CENTER
         paint.style = Paint.Style.FILL
         paint.strokeWidth = Utils.dp2px(2)
         paint.textSize = Utils.dp2px(16)
+
+//        postDelayed({ animationPrev() }, 2000)
+//        postDelayed({ animationNext() }, 5000)
+//        postDelayed({ animationNext() }, 8000)
     }
 
 
@@ -56,8 +133,7 @@ class Gallery (context: Context, attributeSet: AttributeSet) : View (context, at
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
 
-        Log.w("xx", "index == ${index}")
-        if (index == 0) {
+        if (index == 0 && upDegree1 < 0) {
             paint.alpha = 255
             canvas!!.drawText("当前是第一张图片", cx, cy / 2, paint)
         }
@@ -67,6 +143,11 @@ class Gallery (context: Context, attributeSet: AttributeSet) : View (context, at
         drawCurrentBitmap(canvas)
 
         drawNextBitmap(canvas)
+
+        if (index == max - 1 && downDegree1 > 45) {
+            paint.alpha = 255
+            canvas!!.drawText("当前是最后一张图片", cx, cy + cy / 2, paint)
+        }
     }
 
     private fun drawPreviousBitmap(canvas: Canvas?) {
@@ -76,12 +157,12 @@ class Gallery (context: Context, attributeSet: AttributeSet) : View (context, at
         // bitmap previous
         val previousBitmap = bitmaps[index - 1]
         var top1 = (height - previousBitmap!!.height) / 2F
-        if (abs(upDegree[1]) > 0 || abs(downDegree[1]) > 90) {
-            paint.alpha = upAlpha[0]
+        if (abs(upDegree1) > 0 || abs(downDegree1) > 90) {
+            paint.alpha = upAlpha0
             canvas!!.save()
             canvas.translate(cx, cy)
             camera.save()
-            camera.rotateX(upDegree[0])
+            camera.rotateX(upDegree0)
             camera.applyToCanvas(canvas)
             camera.restore()
             canvas.clipRect(-cx, -cy, cx, 0F)
@@ -92,20 +173,15 @@ class Gallery (context: Context, attributeSet: AttributeSet) : View (context, at
 
         // bitmap previous
         // bitmap previous lower
-//        Log.w("xx", "upDegree[$index] == ${upDegree[1]}")
-        if (abs(upDegree[1]) > 89.99F) {
-            var bottomTopOffset = cy * cos(Math.toRadians(abs(downDegree[0].toDouble()))).toFloat()
-            if (bottomTopOffset < 0) {
-                bottomTopOffset = 0F
-            }
-            paint.alpha = downAlpha[0]
+        if (abs(upDegree1) > NINETY_DEGREE) {
+            paint.alpha = downAlpha0
             canvas!!.save()
             canvas.translate(cx, cy)
             camera.save()
-            camera.rotateX(downDegree[0])
+            camera.rotateX(downDegree0)
             camera.applyToCanvas(canvas)
             camera.restore()
-            canvas.clipRect(-cx, 0F, cx, bottomTopOffset)
+            canvas.clipRect(-cx, 0F, cx, cy)
             canvas.translate(-cx, -cy)
             canvas.drawBitmap(previousBitmap, 0F, top1, paint)
             canvas.restore()
@@ -113,20 +189,24 @@ class Gallery (context: Context, attributeSet: AttributeSet) : View (context, at
     }
 
     private fun drawCurrentBitmap(canvas: Canvas?) {
+        if (index < 0) {
+            return
+        }
         // bitmap current
         // bitmap current upper
-        paint.alpha = 255
+        paint.alpha = upAlpha1
         val currentBitmap = bitmaps[index]
         var top = (height - currentBitmap!!.height) / 2F
 
-//        if (downDegree[1] > 90) {
-//            paint.alpha = upAlpha[index]
-//        }
+
+        if (upDegree1 < -NINETY_DEGREE) {
+            upDegree1 = -90F
+        }
 
         canvas!!.save()
         canvas.translate(cx, cy)
         camera.save()
-        camera.rotateX(upDegree[1])
+        camera.rotateX(upDegree1)
         camera.applyToCanvas(canvas)
         camera.restore()
         canvas.clipRect(-cx, -cy, cx, 0F)
@@ -135,26 +215,24 @@ class Gallery (context: Context, attributeSet: AttributeSet) : View (context, at
         canvas.restore()
 
         // currentBitmap lower
-//        if (abs(upDegree[1]) > 90) {
-//            paint.alpha = 255 - upAlpha[index]
-//        }
-
-
-        Log.w("xx", "upDegree[$index] == ${upDegree[1]}")
-        var bottomTopOffset = 0F
-        if (downDegree[0] < 90) {
-            bottomTopOffset = cy * (cos(Math.toRadians(abs(downDegree[0].toDouble()))).toFloat())
+        if (downDegree1 < 90) {
+            paint.alpha = downAlpha1
+            var bottomTopOffset = 0F
+            if (downDegree0 < 90) {
+                var halfHeight = if (index > 0) { bitmaps[index - 1]!!.height / 2F } else { cy }
+                bottomTopOffset = halfHeight * (cos(Math.toRadians(downDegree0.toDouble())).toFloat())
+            }
+            canvas!!.save()
+            canvas.translate(cx, cy)
+            camera.save()
+            camera.rotateX(downDegree1)
+            camera.applyToCanvas(canvas)
+            camera.restore()
+            canvas.clipRect(-cx, bottomTopOffset, cx, cy)
+            canvas.translate(-cx, -cy)
+            canvas.drawBitmap(currentBitmap!!, 0F, top, paint)
+            canvas.restore()
         }
-        canvas!!.save()
-        canvas.translate(cx, cy)
-        camera.save()
-        camera.rotateX(downDegree[1])
-        camera.applyToCanvas(canvas)
-        camera.restore()
-        canvas.clipRect(-cx, bottomTopOffset, cx, cy)
-        canvas.translate(-cx, -cy)
-        canvas.drawBitmap(currentBitmap!!, 0F, top, paint)
-        canvas.restore()
     }
 
     private fun drawNextBitmap(canvas: Canvas?) {
@@ -164,12 +242,12 @@ class Gallery (context: Context, attributeSet: AttributeSet) : View (context, at
         // bitmap next
         val nextBitmap = bitmaps[index + 1]
         var top = (height - nextBitmap!!.height) / 2F
-        if (downDegree[1] > 89.99F) {
-            paint.alpha = downAlpha[2]
+        if (downDegree1 > NINETY_DEGREE) {
+            paint.alpha = upAlpha2
             canvas!!.save()
             canvas.translate(cx, cy)
             camera.save()
-            camera.rotateX(upDegree[2])
+            camera.rotateX(upDegree2)
             camera.applyToCanvas(canvas)
             camera.restore()
             canvas.clipRect(-cx, -cy, cx, 0F)
@@ -180,16 +258,17 @@ class Gallery (context: Context, attributeSet: AttributeSet) : View (context, at
 
         // bitmap next
         // bitmap next lower
-        if (downDegree[1] > 0) {
-            var bottomTopOffset = cy * cos(Math.toRadians(abs(downDegree[1].toDouble()))).toFloat()
+        if (downDegree1 > 0) {
+            var halfHeight = bitmaps[index]!!.height / 2F
+            var bottomTopOffset = halfHeight * cos(Math.toRadians(abs(downDegree1.toDouble()))).toFloat()
             if (bottomTopOffset < 0) {
                 bottomTopOffset = 0F
             }
-            paint.alpha = downAlpha[2]
+            paint.alpha = downAlpha2
             canvas!!.save()
             canvas.translate(cx, cy)
             camera.save()
-            camera.rotateX(downDegree[2])
+            camera.rotateX(downDegree2)
             camera.applyToCanvas(canvas)
             camera.restore()
             canvas.clipRect(-cx, bottomTopOffset, cx, cy)
@@ -199,7 +278,7 @@ class Gallery (context: Context, attributeSet: AttributeSet) : View (context, at
         }
     }
 
-    var downY = 0F
+    private var downY = 0F
 
     override fun onTouchEvent(event: MotionEvent?): Boolean {
         when (event!!.actionMasked) {
@@ -207,76 +286,192 @@ class Gallery (context: Context, attributeSet: AttributeSet) : View (context, at
                 downY = event.y
             }
             MotionEvent.ACTION_MOVE -> {
-                var offsetY = event.y - downY
+                val offsetY = event.y - downY
                 if (offsetY > 0) {
                     // 从上往下翻 -- 上一页
-                    upDegree[1] = - offsetY / cy * 180
+                    upDegree1 = - offsetY / cy * 180
                     if (index > 0) {
-                        var absDegree = abs(upDegree[1])
+                        var absDegree = abs(upDegree1)
                         if (absDegree > 90) {
+                            downAlpha1 = ((180 - absDegree) / 90 * 255).toInt() // 255 -> 0
                             absDegree = 90F
                         }
-                        upAlpha[0] = (absDegree / 90 * 255).toInt()
-                        downDegree[0] = upDegree[1] + 180
-                        if (downDegree[0] < 0) {
-                            downDegree[0]= 0F
+                        upAlpha0 = (absDegree / 90 * 255).toInt() // 0 -> 255
+                        downDegree0 = upDegree1 + 180
+                        if (downDegree0 < 0) {
+                            downDegree0= 0F
                         }
                     }
-                    if (upDegree[1] < -90) {
-                        upDegree[1] = -90F
+                    if (index == 0) {
+                        upDegree1 = max(upDegree1, -60F)
+                    }
+                    if (upDegree1 < -90) {
+                        upDegree1 = -90F
                     }
                 } else {
                     // 从下往上翻 -- 下一页
-                    downDegree[1] = - offsetY / cy * 180
+                    downDegree1 = - offsetY / cy * 180
                     if (index < max - 1) {
-                        var absDegree = abs(downDegree[1])
+                        var absDegree = abs(downDegree1)
                         if (absDegree > 90) {
+                            upAlpha1 = 255 - ((absDegree - 90) / 90 * 255).toInt() // 255 -> 0
                             absDegree = 90F
                         }
-                        downAlpha[2] = abs((absDegree / 90 * 255).toInt())
-                        upDegree[2] = downDegree[1] - 180
-                        if (upDegree[2] > 0) {
-                            upDegree[2] = 0F
+                        downAlpha2 = abs((absDegree / 90 * 255).toInt()) // 0 -> 255
+                        upDegree2 = downDegree1 - 180
+                        if (upDegree2 > 0) {
+                            upDegree2 = 0F
                         }
                     }
-                    if (downDegree[1] > 90) {
-                        downDegree[1] = 90F
+                    if (index == max - 1) {
+                        downDegree1 = min(downDegree1, 60F)
+                    }
+                    if (downDegree1 > 90) {
+                        downDegree1 = 90F
                     }
                 }
                 invalidate()
             }
             MotionEvent.ACTION_UP -> {
-//                upDegree[1] = 0F
-//                downDegree[1] = 0F
-//                downDegree[0] = 180F
-//                upAlpha[index] = 0
+                if (abs(upDegree1) > NINETY_DEGREE) {
+                    animationPrev()
+                } else if (abs(upDegree1) > 0) {
+                    animationPrevReset()
+                }
 
-//                Log.w("xx", "downDegree[1] = ${downDegree[1]}")
-//                if (downDegree[1] > 1F) {
-//                    index++
-//                }
-
-                animationNext()
-                reset()
-//                index++
-                invalidate()
+                if (abs(downDegree1) > NINETY_DEGREE) {
+                    animationNext()
+                } else if (abs(downDegree1) > 0) {
+                    animationNextReset()
+                }
             }
         }
         return true
     }
 
     /**
-     * 翻下一页, 动画
+     * 翻到上一页, 动画
+     */
+    private fun animationPrev() {
+        val upDegree1ValueHolder = PropertyValuesHolder.ofFloat("upDegree1", upDegree1, -180F)
+        val downDegree0ValueHolder = PropertyValuesHolder.ofFloat("downDegree0", downDegree0, 0F)
+
+        val upAlpha0ValueHolder = PropertyValuesHolder.ofInt("upAlpha0", upAlpha0, 255)
+        val downAlpha1ValueHolder = PropertyValuesHolder.ofInt("downAlpha1", downAlpha1, 0)
+
+        val objectAnimator = ObjectAnimator.ofPropertyValuesHolder(
+                this,
+                upDegree1ValueHolder,
+                downDegree0ValueHolder,
+                upAlpha0ValueHolder,
+                downAlpha1ValueHolder
+        )
+
+        objectAnimator.duration = flipDuration
+        objectAnimator.addListener(object : AnimatorListenerAdapter() {
+            override fun onAnimationEnd(animation: Animator?) {
+                if (index > 0) {
+                    index--
+                }
+                reset()
+            }
+        })
+        objectAnimator.start()
+    }
+
+    /**
+     * 翻到上一页, 复原动画
+     */
+    private fun animationPrevReset() {
+        val upDegree1ValueHolder = PropertyValuesHolder.ofFloat("upDegree1", upDegree1, 0F)
+        val downDegree0ValueHolder = PropertyValuesHolder.ofFloat("downDegree0", downDegree0, 180F)
+
+        val upAlpha0ValueHolder = PropertyValuesHolder.ofInt("upAlpha0", upAlpha0, 0)
+
+        val objectAnimator = ObjectAnimator.ofPropertyValuesHolder(
+                this,
+                upDegree1ValueHolder,
+                downDegree0ValueHolder,
+                upAlpha0ValueHolder
+        )
+        objectAnimator.duration = flipDuration
+        objectAnimator.addListener(object : AnimatorListenerAdapter() {
+            override fun onAnimationEnd(animation: Animator?) {
+                reset()
+            }
+        })
+        objectAnimator.start()
+    }
+
+    /**
+     * 翻到下一页, 动画
      */
     private fun animationNext() {
-//        var propertyValuesHolder = PropertyValuesHolder.ofFloat("")
+        val downDegree1ValueHolder = PropertyValuesHolder.ofFloat("downDegree1", downDegree1, 180F)
+        val upDegree2ValueHolder = PropertyValuesHolder.ofFloat("upDegree2", upDegree2, 0F)
+
+        val upAlpha1ValueHolder = PropertyValuesHolder.ofInt("upAlpha1", upAlpha1, 0)
+
+        val objectAnimator = ObjectAnimator.ofPropertyValuesHolder(
+                this,
+                downDegree1ValueHolder,
+                upDegree2ValueHolder,
+                upAlpha1ValueHolder
+        )
+        objectAnimator.duration = flipDuration
+        objectAnimator.addListener(object : AnimatorListenerAdapter() {
+            override fun onAnimationEnd(animation: Animator?) {
+                if (index < max - 1) {
+                    index++
+                }
+                reset()
+            }
+        })
+        objectAnimator.start()
+    }
+
+    /**
+     * 翻到下一页, 复原动画
+     */
+    private fun animationNextReset() {
+        val downDegree1ValueHolder = PropertyValuesHolder.ofFloat("downDegree1", downDegree1, 0F)
+        val upDegree2ValueHolder = PropertyValuesHolder.ofFloat("upDegree2", upDegree2, -180F)
+
+        val downAlpha2ValueHolder = PropertyValuesHolder.ofInt("downAlpha2", downAlpha2, 0)
+
+        val objectAnimator = ObjectAnimator.ofPropertyValuesHolder(
+                this,
+                downDegree1ValueHolder,
+                upDegree2ValueHolder,
+                downAlpha2ValueHolder
+        )
+        objectAnimator.duration = flipDuration
+        objectAnimator.addListener(object : AnimatorListenerAdapter() {
+            override fun onAnimationEnd(animation: Animator?) {
+                reset()
+            }
+        })
+        objectAnimator.start()
     }
 
     private fun reset() {
-        upDegree = arrayOf(0F, 0F, -180F)
-        downDegree = arrayOf(180F, 0F, 0F)
+        // Reset degree
+        upDegree0 = 0F
+        upDegree1 = 0F
+        upDegree2 = -180F
 
-        upAlpha = arrayOf(0, 0, 255)
-        downAlpha = arrayOf(255, 0, 255)
+        downDegree0 = 180F
+        downDegree1 = 0F
+        downDegree2 = 0F
+
+
+        // Reset alpha
+        upAlpha0 = 0
+        upAlpha1 = 255
+        upAlpha2 = 255
+
+        downAlpha0 = 255
+        downAlpha1 = 255
+        downAlpha2 = 255
     }
 }
