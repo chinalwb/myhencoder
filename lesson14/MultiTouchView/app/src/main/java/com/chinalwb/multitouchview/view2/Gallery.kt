@@ -1,5 +1,6 @@
 package com.chinalwb.multitouchview.view2
 
+import android.animation.PropertyValuesHolder
 import android.content.Context
 import android.graphics.*
 import android.util.AttributeSet
@@ -29,7 +30,7 @@ class Gallery (context: Context, attributeSet: AttributeSet) : View (context, at
     private var upAlpha = arrayOf(0, 0, 255)
     private var downAlpha = arrayOf(255, 0, 255)
 
-    private var index = 0
+    private var index = 2
     private var max = 3
     private var bitmaps: Array<Bitmap?> = arrayOfNulls(3)
 
@@ -41,13 +42,6 @@ class Gallery (context: Context, attributeSet: AttributeSet) : View (context, at
         paint.textSize = Utils.dp2px(16)
     }
 
-    private fun reset() {
-        upDegree = arrayOf(0F, 0F, -180F)
-        downDegree = arrayOf(180F, 0F, 0F)
-
-        upAlpha = arrayOf(0, 0, 255)
-        downAlpha = arrayOf(255, 0, 255)
-    }
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         super.onSizeChanged(w, h, oldw, oldh)
@@ -104,7 +98,7 @@ class Gallery (context: Context, attributeSet: AttributeSet) : View (context, at
             if (bottomTopOffset < 0) {
                 bottomTopOffset = 0F
             }
-            paint.alpha = downAlpha[index - 1]
+            paint.alpha = downAlpha[0]
             canvas!!.save()
             canvas.translate(cx, cy)
             camera.save()
@@ -222,7 +216,7 @@ class Gallery (context: Context, attributeSet: AttributeSet) : View (context, at
                         if (absDegree > 90) {
                             absDegree = 90F
                         }
-                        upAlpha[index - 1] = (absDegree / 90 * 255).toInt()
+                        upAlpha[0] = (absDegree / 90 * 255).toInt()
                         downDegree[0] = upDegree[1] + 180
                         if (downDegree[0] < 0) {
                             downDegree[0]= 0F
@@ -262,11 +256,27 @@ class Gallery (context: Context, attributeSet: AttributeSet) : View (context, at
 //                    index++
 //                }
 
+                animationNext()
                 reset()
-                index++
+//                index++
                 invalidate()
             }
         }
         return true
+    }
+
+    /**
+     * 翻下一页, 动画
+     */
+    private fun animationNext() {
+//        var propertyValuesHolder = PropertyValuesHolder.ofFloat("")
+    }
+
+    private fun reset() {
+        upDegree = arrayOf(0F, 0F, -180F)
+        downDegree = arrayOf(180F, 0F, 0F)
+
+        upAlpha = arrayOf(0, 0, 255)
+        downAlpha = arrayOf(255, 0, 255)
     }
 }
