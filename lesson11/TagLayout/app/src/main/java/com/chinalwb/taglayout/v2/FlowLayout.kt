@@ -79,12 +79,20 @@ class FlowLayout(context: Context, attributeSet: AttributeSet) : ViewGroup(conte
     }
 
     // 用代码 FlowLayout#addView 的方式添加的子view 用这个方法来设置 MarginLayoutParams
-    override fun generateDefaultLayoutParams(): LayoutParams {
-        return MarginLayoutParams(WRAP_CONTENT, WRAP_CONTENT)
+    override fun generateDefaultLayoutParams(): LayoutParams? {
+        Log.w("XX", "generate default...")
+//        return MarginLayoutParams(WRAP_CONTENT, WRAP_CONTENT)
+        return null
     }
 
     // 从 XML 文件当中加载的子view 用这个方法来设置 MarginLayoutParams
     override fun generateLayoutParams(attrs: AttributeSet?): LayoutParams {
+        Log.w("XX", "generate new ...")
         return MarginLayoutParams(context, attrs)
+    }
+
+    override fun checkLayoutParams(p: LayoutParams?): Boolean {
+        Log.w("XX", "check layout params, p is $p")
+        return super.checkLayoutParams(p)
     }
 }

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.chinalwb.taglayout.v1.ColorTextView;
@@ -33,33 +34,33 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        testClick();
+//        testClick();
 
 //        test();
 
 //        flowLayout = findViewById(R.id.flow_layout);
-
+//
 //        addProvinces();
     }
 
-    private void testClick() {
-        View view1 = findViewById(R.id.view_1);
-        View view2 = findViewById(R.id.view_2);
-
-        view1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(MainActivity.this, "View - Left", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        view2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(MainActivity.this, "View - right", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
+//    private void testClick() {
+//        View view1 = findViewById(R.id.view_1);
+//        View view2 = findViewById(R.id.view_2);
+//
+//        view1.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Toast.makeText(MainActivity.this, "View - Left", Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//
+//        view2.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Toast.makeText(MainActivity.this, "View - right", Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//    }
 
     private void test () {
 //        squareImageView = findViewById(R.id.square_image_view);
@@ -75,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
         for (String x : PROVINCES) {
             ColorTextView colorTextView = new ColorTextView(this);
             colorTextView.setText(x);
+            colorTextView.setLayoutParams(new ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
             this.flowLayout.addView(colorTextView);
         }
     }
