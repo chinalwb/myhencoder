@@ -1,3 +1,20 @@
+TagLayout -- 自定义 ViewGroup
+-----
+override 3 个方法
+
+override fun generateDefaultLayoutParams(): LayoutParams { .. }
+override fun generateLayoutPrams(attrs: AttibuteSet?): LayoutParams { .. }
+override fun checkLayoutParams(p: LayoutParams?): Boolean { .. }
+其中:
+当用代码 addView 的方式往 viewgroup 里面添加一个 view 的时候, 如果这个 view 没有调用 setLayoutParams(..) 方法的话, ViewGroup 的 addView 方法默认会调用 generateDefaultLayoutParams 方法, 得到一个 LayoutParams 对象, 并且子类 override 的这个方法不能返回 null, 否则 ViewGroup 会直接抛出异常导致 crash
+
+如果是 XML 的方式往 viewgroup 中添加了子view, 则会先调用 generateLayoutPrams(attrs) 方法来得到一个 LayoutParams 对象, 这是给自定义 viewgroup 的子类一个机会来应用自定义的 LayoutParams.
+
+在 generateLayoutParams 方法调用完毕之后返回一个 LayoutParams 对象, 这个对象会被传到 checkLayoutParams 方法中, 进行有效性判断, checkLayoutParams 方法, 他的默认实现是判断传入的 p 是不是 null. 如果不是 null 返回 true.
+
+如果 checkLayoutParams 方法返回了 false,则会调用 ViewGroup#generateLayoutParams(LayoutParams) 方法(*注意这个方法重载了刚才的那个以 AttributeSet 作为参数的方法), 而此方法默认再讲传递进来的LayoutParams 参数返回.
+
+
 #### 触摸反馈
 
 

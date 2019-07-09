@@ -40,8 +40,8 @@
 ## lesson10 - 测量和布局
 * [HenCoder notes](./notes/lesson10/hencoder-notes.md)
 
-## lesson11 - ？？？
-* ???
+## lesson11 - 自定义ViewGroup TagLayout 和 触摸反馈
+* [HenCoder_notes](./notes/lesson11/hencoder-notes.md)
 
 ## lesson12 - ScalableImageView
 * [HenCoder notes](./notes/lesson12/hencoder-notes.md)
