@@ -13,3 +13,4 @@
 第一次测量确认父view的宽度，将子view的宽度设定成0
 第二次测量已经得到父view的宽度，子view的宽度设定为match_parent = 父view的宽度
 
+![view 的测量](./view%20的测量.jpg)
