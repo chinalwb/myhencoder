@@ -79,7 +79,7 @@
 
 * git branch -d branchX // 删除一个本地仓库的分支
 
-* git merge branchX --no-ff
+* git merge branchX --no-ff // 禁止fast forward. 不管是不是超前都需要一个额外的 commit
 
 ## 其他相关
 1. [为什么wait / notify必须在synchronize方法或代码块中运行？](./notes/others/why-wait-and-notify-have-to-be-in-synchronized.md)
