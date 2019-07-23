@@ -81,6 +81,8 @@
 
 * git merge branchX --no-ff // 禁止fast forward. 不管是不是超前都需要一个额外的 commit
 
+* git rebase master // 在分支上执行这句代码之后, 分支的第一次提交的上一版本改为 master 上最后一次提交版本
+
 ## 其他相关
 1. [为什么wait / notify必须在synchronize方法或代码块中运行？](./notes/others/why-wait-and-notify-have-to-be-in-synchronized.md)
 2. [Java GC Roots 和 内存分区的垃圾回收相关](https://www.w3resource.com/java-tutorial/garbage-collection-in-java.php)
