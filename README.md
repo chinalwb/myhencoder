@@ -72,7 +72,7 @@
 
 ## Git
 * git merge branch1
-* 冲突时, 手动解决
+* 冲突时, 手动解决之后 执行:
 * git add .
 * git merge --continue // 解决冲突的命令
 * git push
