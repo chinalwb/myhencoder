@@ -83,6 +83,8 @@
 
 * git rebase master // 在分支上执行这句代码之后, 把分支上的所有提交版本历史在 master 上最后一次提交版本之后重新做一遍, 然后把 feature的引用指向 master 之后的最后一个版本 -- 也就是说 master 之后的所有提交都是跟 feature 上一样的. master 指向的引用保持不变.
 
+* rebase 也有可能发生冲突, 手动解决之后, 执行 git rebase --continue // 继续执行 rebase 的命令
+
 ## 其他相关
 1. [为什么wait / notify必须在synchronize方法或代码块中运行？](./notes/others/why-wait-and-notify-have-to-be-in-synchronized.md)
 2. [Java GC Roots 和 内存分区的垃圾回收相关](https://www.w3resource.com/java-tutorial/garbage-collection-in-java.php)
