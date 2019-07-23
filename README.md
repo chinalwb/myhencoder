@@ -81,7 +81,7 @@
 
 * git merge branchX --no-ff // 禁止fast forward. 不管是不是超前都需要一个额外的 commit
 
-* git rebase master // 在分支上执行这句代码之后, 分支的第一次提交的上一版本改为 master 上最后一次提交版本
+* git rebase master // 在分支上执行这句代码之后, 把分支上的所有提交版本历史在 master 上最后一次提交版本之后重新做一遍, 然后把 feature的引用指向 master 之后的最后一个版本 -- 也就是说 master 之后的所有提交都是跟 feature 上一样的. master 指向的引用保持不变.
 
 ## 其他相关
 1. [为什么wait / notify必须在synchronize方法或代码块中运行？](./notes/others/why-wait-and-notify-have-to-be-in-synchronized.md)
