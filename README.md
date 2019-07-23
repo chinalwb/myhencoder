@@ -70,6 +70,12 @@
 ## lesson20 - Java I/O, nio, Okio
 * [HenCoder notes](./notes/lesson20/hencoder-notes.md)
 
+## Git
+* git merge branch1
+* 冲突时, 手动解决
+* git add .
+* git merge --continue // 解决冲突的命令
+* git push
 
 ## 其他相关
 1. [为什么wait / notify必须在synchronize方法或代码块中运行？](./notes/others/why-wait-and-notify-have-to-be-in-synchronized.md)
