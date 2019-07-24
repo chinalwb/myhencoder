@@ -89,6 +89,12 @@
 
 * git reset --hard feature3 // 把 head 指向 feature3 的头部
 
+* git log
+* git reflog master/branchX
+* git tag tag_v1.0 // 打 tag
+
+* git merge --no-ff feature1 // 以 no fast-forward 的方式合并 feature1
+
 ## 其他相关
 1. [为什么wait / notify必须在synchronize方法或代码块中运行？](./notes/others/why-wait-and-notify-have-to-be-in-synchronized.md)
 2. [Java GC Roots 和 内存分区的垃圾回收相关](https://www.w3resource.com/java-tutorial/garbage-collection-in-java.php)
