@@ -32,13 +32,13 @@ public boolean equals(Object o) { // 注意这个地方，方法的参数是  Ob
 
 OK. 注意此时我们并没有override hashCode方法。
 我们来结合HashMap使用一下：
-Person a1 = new Person("Tom");
-        
+```
+        Person a1 = new Person("Tom");
         HashMap<Person, Integer> map = new HashMap<Person, Integer>();
         map.put(a1, 100);
         Integer a2Int = map.get(new Person("Tom"));
         System.out.println("a2Int == " + a2Int);
-
+```
 猜测一下，这个结果输出什么？
 
 他输出了 a2Int == null.
@@ -49,11 +49,12 @@ Person a1 = new Person("Tom");
 是的，确实是这样。
 那我们再来看另外一个例子。
 
+```
        Integer int1 = new Integer(1);
         HashMap<Integer, String> map2 = new HashMap<Integer, String>();
         map2.put(int1, "Hello");
         String v = map2.get(new Integer(1));
-
+```
 跟上一个例子不同，在这个例子中，我们使用了Integer作为HashMap的key，上个例子我们是使用的我们自定义的Person类做为key。
 这个代码，你认为 v 会返回什么？
 null吗？因为new的Integer对象跟int1不是同一个对象？
@@ -64,7 +65,7 @@ Hello吗？因为new的Integer对象的hash值跟int1是相等的？
 
 那么此时你一定推测出来了Integer.java一定Override了 Object的hashCode方法。
 我们去看下：
-
+```
     @Override
     public int hashCode() {
         return Integer.hashCode(value);
@@ -72,15 +73,16 @@ Hello吗？因为new的Integer对象的hash值跟int1是相等的？
     public static int hashCode(int value) {
         return value;
     }
-
+```
 顺便贴出来Integer.java的equals方法：
+```
     public boolean equals(Object obj) {
         if (obj instanceof Integer) {
             return value == ((Integer)obj).intValue();
         }
         return false;
     }
-
+```
 那么对于第一个例子如果我们想让 map.get(new Person("Tom"))不返回null
 我们就需要，为Person类override hashCode方法。
 
