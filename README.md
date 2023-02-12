@@ -48,6 +48,8 @@
 
 ## lesson13 - 多点触控
 * [HenCoder notes](./notes/lesson04/hencoder-notes.md)
+双击图片位移计算方法解释
+![image](https://github.com/chinalwb/myhencoder/blob/master/notes/lesson12/scale-center-offset.png)
 
 ## lesson14 - ???
 * ???
